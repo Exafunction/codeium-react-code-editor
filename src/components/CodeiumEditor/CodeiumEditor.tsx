@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useCallback, useMemo, useRef } from "react";
+import React, { useRef } from "react";
 import Editor, { EditorProps, Monaco } from "@monaco-editor/react";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import { editor } from "monaco-editor/esm/vs/editor/editor.api";
 
 export type CodeiumEditorProps = {
   editorProps: EditorProps;
@@ -14,10 +14,10 @@ export type CodeiumEditorProps = {
 export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
   editorProps,
 }) => {
-  const editorRef = useRef<monaco.editor.IStandaloneCodeEditor | null>(null);
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
 
   const handleEditorDidMount = (
-    editor: monaco.editor.IStandaloneCodeEditor,
+    editor: editor.IStandaloneCodeEditor,
     monaco: Monaco
   ) => {
     editorRef.current = editor;
