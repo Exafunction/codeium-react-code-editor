@@ -2,13 +2,14 @@
 
 import React, { useRef, useState } from "react";
 import { createConnectTransport } from "@connectrpc/connect-web";
-import { createPromiseClient, PromiseClient } from "@connectrpc/connect";
+import { createPromiseClient } from "@connectrpc/connect";
 import { Status } from "./Status";
 import Editor, { EditorProps, Monaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor/esm/vs/editor/editor.api";
 import { getDefaultValue } from "./defaultValues";
 import { LanguageServerService } from "../../api/proto/exa/language_server_pb/language_server_connect";
 import { InlineCompletionProvider } from "./InlineCompletionProvider";
+import { CodeiumLogo } from "../CodeiumLogo/CodeiumLogo";
 
 export type CodeiumEditorProps = {
   language?: string;
@@ -84,12 +85,41 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
   };
 
   return (
-    <Editor
-      {...defaultLanguageProps}
-      width={width}
-      height={height}
-      language={language}
-      onMount={handleEditorDidMount}
-    />
+    <div style={{ width, height }}>
+      <a href="https://codeium.com?referrer=codeium-editor">
+        <CodeiumLogo
+          width={30}
+          height={30}
+          style={{ position: "absolute", top: 12, right: 12, zIndex: 1 }}
+        />
+      </a>
+      <Editor
+        {...defaultLanguageProps}
+        width={width}
+        height={height}
+        language={language}
+        onMount={handleEditorDidMount}
+        options={{
+          scrollBeyondLastColumn: 0,
+          scrollbar: {
+            alwaysConsumeMouseWheel: false,
+            vertical: "hidden",
+          },
+          codeLens: false,
+          // for resizing, but apparently might have "severe performance impact"
+          // automaticLayout: true,
+          minimap: {
+            enabled: false,
+          },
+          quickSuggestions: false,
+          folding: false,
+          foldingHighlight: false,
+          foldingImportsByDefault: false,
+          links: false,
+          fontSize: 14,
+          wordWrap: "on",
+        }}
+      />
+    </div>
   );
 };

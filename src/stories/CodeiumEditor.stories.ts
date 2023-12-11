@@ -33,7 +33,7 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
   args: {
-    width: "100vw",
+    width: "700px",
     height: "500px",
   },
 };
@@ -41,7 +41,7 @@ export const Primary: Story = {
 export const Secondary: Story = {
   args: {
     language: "python",
-    width: "100vw",
+    width: "700px",
     height: "500px",
   },
 };
