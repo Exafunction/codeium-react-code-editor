@@ -7,17 +7,17 @@ export const getDefaultValue = (language: string): string => {
       return `// Welcome to Codeium Editor!
 // Press Enter and use Tab to accept AI suggestions. Here's an example:
 
-// Write me a function that adds two numbers`;
+// fib(n) function to calculate the n-th fibonacci number`;
     case "python":
       return `# Welcome to Codeium Editor!
 # Press Enter and use Tab to accept AI suggestions. Here's an example:
 
-# Write me a function that adds two numbers`;
+# fib(n) function to calculate the n-th fibonacci number`;
     case "css":
       return `/* Welcome to Codeium Editor!
 Press Enter and use Tab to accept AI suggestions. Here's an example:*/
 
-/* Write me a function that adds two numbers*/`;
+/* .action-button class with a hover effect. */`;
     default:
       return "";
   }
