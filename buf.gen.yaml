@@ -1,0 +1,14 @@
+# buf.gen.yaml defines a local generation template.
+# For details, see https://docs.buf.build/configuration/v1/buf-gen-yaml
+version: v1
+plugins:
+  - plugin: buf.build/bufbuild/es:v1.4.2
+    out: src/api/proto
+    opt:
+      - target=ts
+      - import_extension=none
+  - plugin: buf.build/connectrpc/es:v1.1.3
+    out: src/api/proto
+    opt:
+      - target=ts
+      - import_extension=none

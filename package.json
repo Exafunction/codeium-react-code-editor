@@ -12,7 +12,9 @@
   "engines": {
     "node": ">=20"
   },
+  "packageManager": "pnpm@8.9.0",
   "scripts": {
+    "generate": "rm -rf ./src/proto && node generate.js",
     "rollup": "rollup -c",
     "clean": "rm -rf node_modules && rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -22,6 +24,7 @@
   "author": "Codeium",
   "license": "ISC",
   "devDependencies": {
+    "@bufbuild/buf": "1.28.1",
     "@monaco-editor/react": "^4.6.0",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
@@ -34,6 +37,7 @@
     "@storybook/react": "^7.6.4",
     "@storybook/react-vite": "^7.6.4",
     "@storybook/test": "^7.6.4",
+    "dotenv": "^16.3.1",
     "@types/react": "^18.2.42",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

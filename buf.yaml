@@ -1,0 +1,15 @@
+version: v1
+deps:
+  - buf.build/envoyproxy/protoc-gen-validate
+build:
+  excludes:
+    - node_modules
+lint:
+  use:
+    - DEFAULT
+  except:
+    - PACKAGE_VERSION_SUFFIX
+  allow_comment_ignores: true
+breaking:
+  except:
+    - FILE_NO_DELETE
