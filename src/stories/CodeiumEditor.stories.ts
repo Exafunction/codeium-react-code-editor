@@ -14,9 +14,15 @@ const meta = {
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
-    editorProps: {
-      width: "100vw",
-      height: 500,
+    language: {
+      options: ["python", "javascript", "typescript", "css", "java"],
+      control: { type: "select" },
+    },
+    width: {
+      control: { type: "text" },
+    },
+    height: {
+      control: { type: "text" },
     },
   },
 } satisfies Meta<typeof CodeiumEditor>;
@@ -27,20 +33,15 @@ type Story = StoryObj<typeof meta>;
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const Primary: Story = {
   args: {
-    editorProps: {
-      width: "100vw",
-      height: 500,
-    },
+    width: "100vw",
+    height: "500px",
   },
 };
 
 export const Secondary: Story = {
   args: {
-    editorProps: {
-      language: "Python",
-      defaultValue: "def fib(n):",
-      width: "100vw",
-      height: 500,
-    },
+    language: "python",
+    width: "100vw",
+    height: "500px",
   },
 };
