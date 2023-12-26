@@ -14,7 +14,7 @@
   },
   "packageManager": "pnpm@8.9.0",
   "scripts": {
-    "generate": "rm -rf ./src/proto && node generate.js",
+    "generate": "rm -rf ./src/api/proto && node generate.js",
     "rollup": "rollup -c",
     "clean": "rm -rf node_modules && rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1",

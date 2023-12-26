@@ -4,6 +4,7 @@ import { PromiseClient } from "@connectrpc/connect";
 import { Status } from "./Status";
 import { MonacoCompletionProvider } from "./CompletionProvider";
 import { LanguageServerService } from "../../api/proto/exa/language_server_pb/language_server_connect";
+import MonacoInlineCompletion from "./InlineCompletion";
 
 declare module "monaco-editor" {
   namespace editor {
@@ -14,7 +15,10 @@ declare module "monaco-editor" {
 }
 
 export class InlineCompletionProvider
-  implements monaco.languages.InlineCompletionsProvider
+  implements
+    monaco.languages.InlineCompletionsProvider<
+      monaco.languages.InlineCompletions<MonacoInlineCompletion>
+    >
 {
   private numCompletionsProvided: number;
   readonly completionProvider: MonacoCompletionProvider;

@@ -19,29 +19,7 @@ import {
 } from "../../api/proto/exa/codeium_common_pb/codeium_common_pb";
 import { Status } from "./Status";
 import { uuid } from "../../utils/uuid";
-
-class MonacoInlineCompletion implements monaco.languages.InlineCompletion {
-  readonly insertText: string;
-  // TODO(prem): Why is this property needed?
-  readonly text: string;
-  readonly range: monaco.IRange;
-  readonly command: {
-    id: string;
-    title: string;
-    arguments: string[];
-  };
-
-  constructor(insertText: string, range: monaco.IRange, completionId: string) {
-    this.insertText = insertText;
-    this.text = insertText;
-    this.range = range;
-    this.command = {
-      id: "codeium.acceptCompletion",
-      title: "Accept Completion",
-      arguments: [completionId, insertText],
-    };
-  }
-}
+import MonacoInlineCompletion from "./InlineCompletion";
 
 /**
  * CompletionProvider class for Codeium.
@@ -81,8 +59,7 @@ export class MonacoCompletionProvider {
     monacoPosition: monaco.Position,
     token: CancellationToken
   ): Promise<
-    | monaco.languages.InlineCompletions<monaco.languages.InlineCompletion>
-    | undefined
+    monaco.languages.InlineCompletions<MonacoInlineCompletion> | undefined
   > {
     const document = new Document(model);
     const position = Position.fromMonaco(monacoPosition);
@@ -144,7 +121,10 @@ export class MonacoCompletionProvider {
       .map((completionItem) =>
         this.createInlineCompletionItem(completionItem, document)
       )
-      .filter((item) => !!item);
+      .filter(
+        (item?: MonacoInlineCompletion): item is MonacoInlineCompletion =>
+          !!item
+      );
 
     this.setStatus(Status.SUCCESS);
     let message = `Generated ${inlineCompletionItems.length} completions`;
@@ -154,7 +134,7 @@ export class MonacoCompletionProvider {
     this.setMessage(message);
 
     return {
-      items: inlineCompletionItems as monaco.languages.InlineCompletion[],
+      items: inlineCompletionItems,
     };
   }
 
