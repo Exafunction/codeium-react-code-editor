@@ -1,7 +1,7 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { Dispatch, SetStateAction } from "react";
 import { PromiseClient } from "@connectrpc/connect";
-import { Status } from "./Status";
+import { Status } from "./CompletionStatus";
 import { MonacoCompletionProvider } from "./CompletionProvider";
 import { LanguageServerService } from "../../api/proto/exa/language_server_pb/language_server_connect";
 

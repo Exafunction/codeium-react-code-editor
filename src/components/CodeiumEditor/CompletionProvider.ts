@@ -17,7 +17,7 @@ import {
   Language,
   Metadata,
 } from "../../api/proto/exa/codeium_common_pb/codeium_common_pb";
-import { Status } from "./Status";
+import { Status } from "./CompletionStatus";
 import { uuid } from "../../utils/uuid";
 
 class MonacoInlineCompletion implements monaco.languages.InlineCompletion {
