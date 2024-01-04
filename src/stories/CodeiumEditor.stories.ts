@@ -27,11 +27,3 @@ export const Primary: Story = {
     language: "python"
   },
 };
-
-export const Secondary: Story = {
-  args: {
-    language: "python",
-    width: "700px",
-    height: "500px",
-  },
-};

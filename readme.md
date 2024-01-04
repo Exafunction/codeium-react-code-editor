@@ -23,7 +23,7 @@ The core API of the editor is the same as that of the wrapped project. You can v
 
 
 ## Acknowledgements
-This project would not have been possible without @suren-atoyan 's [Monaco React project](https://github.com/suren-atoyan/monaco-react).
+This project would not have been possible without [Suren Atoyan's Monaco React project](https://github.com/suren-atoyan/monaco-react).
 
 ## Issues 
 Create issues in this repositories for anything related to autocompletion functionality. If you have any issues with the editor API or functionality, create an issue in the [editor repository](https://github.com/suren-atoyan/monaco-react).
