@@ -13,18 +13,7 @@ const meta = {
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
   tags: ["autodocs"],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
-  argTypes: {
-    language: {
-      options: ["python", "javascript", "typescript", "css", "java"],
-      control: { type: "select" },
-    },
-    width: {
-      control: { type: "text" },
-    },
-    height: {
-      control: { type: "text" },
-    },
-  },
+  argTypes: {},
 } satisfies Meta<typeof CodeiumEditor>;
 
 export default meta;
@@ -35,6 +24,7 @@ export const Primary: Story = {
   args: {
     width: "700px",
     height: "500px",
+    language: "python"
   },
 };
 
