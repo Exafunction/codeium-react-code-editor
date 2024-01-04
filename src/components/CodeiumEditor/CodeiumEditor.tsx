@@ -3,7 +3,7 @@
 import React, { useRef, useState } from "react";
 import { createConnectTransport } from "@connectrpc/connect-web";
 import { createPromiseClient } from "@connectrpc/connect";
-import { Status } from "./CompletionStatus";
+import { Status } from "./Status";
 import Editor, { EditorProps, Monaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor/esm/vs/editor/editor.api";
 import { getDefaultValue } from "./defaultValues";
