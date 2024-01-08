@@ -21,7 +21,6 @@ The autocompletes are provided by analyzing the editor's content and predicting 
 ## API
 The core API of the editor is the same as that of the wrapped project. You can view the editor API [here](https://github.com/suren-atoyan/monaco-react?tab=readme-ov-file#editor).
 
-
 ## Acknowledgements
 This project would not have been possible without [Suren Atoyan's Monaco React project](https://github.com/suren-atoyan/monaco-react).
 
