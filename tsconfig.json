@@ -16,7 +16,11 @@
     "sourceMap": true,
     "outDir": "dist",
     "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "emitDeclarationOnly": true
-  }
+    "allowSyntheticDefaultImports": true
+    // "emitDeclarationOnly": true
+  },
+  "exclude": [
+       "node_modules",
+       "demo"
+   ]
 }
