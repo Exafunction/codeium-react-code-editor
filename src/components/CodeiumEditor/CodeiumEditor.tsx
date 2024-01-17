@@ -7,26 +7,19 @@ import { Status } from "./Status";
 import Editor, { EditorProps, Monaco } from "@monaco-editor/react";
 import { editor } from "monaco-editor/esm/vs/editor/editor.api";
 import { getDefaultValue } from "./defaultValues";
+
 import { LanguageServerService } from "../../api/proto/exa/language_server_pb/language_server_connect";
 import { InlineCompletionProvider } from "./InlineCompletionProvider";
 import { CodeiumLogo } from "../CodeiumLogo/CodeiumLogo";
 
-export type CodeiumEditorProps = {
-  language?: string;
-  width: string | number;
-  height: string | number;
-  onMount?: (editor: editor.IStandaloneCodeEditor, monaco: Monaco) => void;
-};
+interface CodeiumEditorProps extends EditorProps {
+  language: string;
+}
 
 /**
  * Code editor that enables Codeium AI suggestions in the editor.
  */
-export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
-  language = "python",
-  width,
-  height,
-  onMount,
-}) => {
+export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const inlineCompletionsProviderRef = useRef<InlineCompletionProvider | null>(
     null
@@ -74,18 +67,21 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
     }
 
     // Pass the editor instance to the user defined onMount prop.
-    if (onMount) {
-      onMount(editor, monaco);
+    if (props.onMount) {
+      props.onMount(editor, monaco);
     }
   };
 
   let defaultLanguageProps: EditorProps = {
-    defaultLanguage: language,
-    defaultValue: getDefaultValue(language),
+    defaultLanguage: props.language,
+    defaultValue: getDefaultValue(props.language),
   };
 
   return (
-    <div style={{ width, height }}>
+    <div style={{
+      width: props.width,
+      height: props.height
+    }}>
       <a href="https://codeium.com?referrer=codeium-editor">
         <CodeiumLogo
           width={30}
@@ -95,9 +91,7 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
       </a>
       <Editor
         {...defaultLanguageProps}
-        width={width}
-        height={height}
-        language={language}
+        {...props}
         onMount={handleEditorDidMount}
         options={{
           scrollBeyondLastColumn: 0,
@@ -118,6 +112,7 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
           links: false,
           fontSize: 14,
           wordWrap: "on",
+          ...props.options
         }}
       />
     </div>
