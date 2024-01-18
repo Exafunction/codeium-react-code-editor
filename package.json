@@ -28,12 +28,17 @@
   },
   "author": "Codeium",
   "license": "ISC",
-  "devDependencies": {
+  "dependencies": {
     "@bufbuild/buf": "1.28.1",
     "@bufbuild/protobuf": "1.4.2",
     "@connectrpc/connect": "1.1.3",
     "@connectrpc/connect-web": "1.1.3",
     "@monaco-editor/react": "^4.6.0",
+    "dotenv": "^16.3.1",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-typescript": "^11.1.5",
@@ -47,9 +52,6 @@
     "@storybook/test": "^7.6.4",
     "@swc/core": "^1.3.104",
     "@types/react": "^18.2.42",
-    "dotenv": "^16.3.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "rollup": "^4.7.0",
     "rollup-plugin-dts": "^6.1.0",
     "storybook": "^7.6.4",
@@ -59,8 +61,5 @@
   },
   "peerDependencies": {
     "monaco-editor": "^0.45.0"
-  },
-  "dependencies": {
-    "demo": "link:/home/andy/code/codeium-react-code-editor/demo"
   }
 }
