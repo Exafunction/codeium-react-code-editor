@@ -77,6 +77,13 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
     defaultValue: getDefaultValue(props.language),
   };
 
+  const layout = {
+    width: props.width || "100%",
+    height: props.height || "500px",
+    minWidth: "300px",
+    minHeight: "60px"
+  };
+
   return (
     <div style={{
       width: props.width,
