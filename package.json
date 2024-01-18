@@ -20,7 +20,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
-    "prepare": "tsc"
+    "prepare": "rm -r types && tsc"
   },
   "repository": {
     "type": "git",
