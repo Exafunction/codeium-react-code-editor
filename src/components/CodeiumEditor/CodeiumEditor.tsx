@@ -79,17 +79,18 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
 
   const layout = {
     width: props.width || "100%",
-    height: props.height || "500px",
-    minWidth: "300px",
-    minHeight: "60px"
+    // The height is set to 300px by default. Otherwise, the editor when
+    // rendered with the default value will not be visible.
+    // Min-height does not address the issue because it needs an explicit height
+    // to be set.
+    // The monaco editor's default height is 100% but it requires the user to
+    // define a container with an explicit height.
+    height: props.height || "300px",
   };
 
   return (
-    <div style={{
-      width: props.width,
-      height: props.height
-    }}>
-      <a href="https://codeium.com?referrer=codeium-editor">
+    <div style={layout}>
+      <a href="https://codeium.com?referrer=codeium-editor" target="_blank" rel="noreferrer noopener">
         <CodeiumLogo
           width={30}
           height={30}
@@ -99,6 +100,8 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
       <Editor
         {...defaultLanguageProps}
         {...props}
+        width={layout.width}
+        height={layout.height}
         onMount={handleEditorDidMount}
         options={{
           scrollBeyondLastColumn: 0,

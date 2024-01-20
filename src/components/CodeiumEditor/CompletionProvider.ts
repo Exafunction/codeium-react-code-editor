@@ -20,6 +20,8 @@ import {
 import { Status } from "./Status";
 import { uuid } from "../../utils/uuid";
 
+const PLAYGROUND_API_KEY = "a8a4a691-8432-41c0-b6c8-5b86997aa623";
+
 class MonacoInlineCompletion implements monaco.languages.InlineCompletion {
   readonly insertText: string;
   // TODO(prem): Why is this property needed?
@@ -61,7 +63,7 @@ export class MonacoCompletionProvider {
       ideVersion: "playground",
       extensionName: "playground",
       extensionVersion: "monaco",
-      apiKey: "a8a4a691-8432-41c0-b6c8-5b86997aa623", // PLAYGROUND_API_KEY
+      apiKey: PLAYGROUND_API_KEY, // PLAYGROUND_API_KEY
       sessionId: `demo-${uuid()}`,
     });
     this.client = grpcClient;
