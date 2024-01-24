@@ -4,7 +4,7 @@
 
 [![NPM](https://nodei.co/npm/@codeium/react-code-editor.png?downloads=true)](https://www.npmjs.com/package/@codeium/react-code-editor)  
 
-Codeium React Editor is a free, open-source code editor with unlimited autocomplete. Brought to you by the team at [Codeium](https://www.codeium.com/).
+Codeium React Editor is a free, open-source code editor with unlimited autocomplete. Brought to you by the team at [Codeium](https://www.codeium.com/). **Free with no account required.**
 
 ![codeium demo](docs/codeium_demo.gif)
 
