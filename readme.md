@@ -47,6 +47,12 @@ export const IdeWithAutocomplete = () => {
 };
 ```
 
+### Examples
+
+Here are some examples of Codeium React Editor used in production:
+
+- [https://khou22.com/programming/codeium](https://khou22.com/programming/codeium?referrer=github) [[src](https://github.com/khou22/khou22.github.io/blob/b2352449d101f7f9cf8a9382f031091d7dd4cfdd/src/app/programming/codeium/page.tsx#L20)]
+
 ## How it works
 
 This project is a wrapper around Microsoft's Monaco editor which is the editor that powers VS Code with the extended capability of providing code autocompletion.
