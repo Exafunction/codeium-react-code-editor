@@ -169,7 +169,7 @@ export class MonacoCompletionProvider {
    * @param completionId - unique ID of the last completion.
    */
   public acceptedLastCompletion(completionId: string) {
-    try {
+    new Promise((resolve, reject) => {
       this.client.acceptCompletion(
         {
           metadata: this.metadata,
@@ -178,11 +178,10 @@ export class MonacoCompletionProvider {
         {
           headers: this.authHeader,
         }
-      );
-    } catch (err) {
-      // Swallow the error.
-      console.log(err);
-    }
+      ).then(resolve).catch((err) => {
+        console.log("Error: ", err)
+      });
+    });
   }
 
   /**

@@ -2,7 +2,7 @@ import resolve from "@rollup/plugin-node-resolve";
 import commonjs from "@rollup/plugin-commonjs";
 import typescript from "@rollup/plugin-typescript";
 import dts from "rollup-plugin-dts";
-
+import banner2 from 'rollup-plugin-banner2'
 import packageJson from "./package.json" assert { type: "json" };
 
 export default [
@@ -20,10 +20,14 @@ export default [
         sourcemap: true,
       },
     ],
+    external: ["react", "react-dom"],
     plugins: [
       resolve(),
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
+      banner2(() => `
+        "use client";
+      `)
     ],
   },
   {

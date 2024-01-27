@@ -16,3 +16,4 @@ dist
 
 src/api/proto
 storybook-static/
+types/

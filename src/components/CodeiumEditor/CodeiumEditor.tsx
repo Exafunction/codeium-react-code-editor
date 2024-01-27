@@ -18,6 +18,7 @@ interface CodeiumEditorProps extends EditorProps {
 
 /**
  * Code editor that enables Codeium AI suggestions in the editor.
+ * The layout by default is width = 100% and height = 300px. These values can be overridden by passing in a string value to the width and/or height props.
  */
 export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
@@ -53,9 +54,13 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
     monaco.editor.registerCommand(
       "codeium.acceptCompletion",
       (_: unknown, completionId: string, insertText: string) => {
-        inlineCompletionsProviderRef.current?.acceptedLastCompletion(
-          completionId
-        );
+        try {
+          inlineCompletionsProviderRef.current?.acceptedLastCompletion(
+            completionId
+          );
+        } catch (err) {
+          console.log("Err");
+        }
       }
     );
 
@@ -77,12 +82,21 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
     defaultValue: getDefaultValue(props.language),
   };
 
+  const layout = {
+    width: props.width || "100%",
+    // The height is set to 300px by default. Otherwise, the editor when
+    // rendered with the default value will not be visible.
+    // The monaco editor's default height is 100% but it requires the user to
+    // define a container with an explicit height.
+    height: props.height || "300px",
+  };
+
   return (
     <div style={{
-      width: props.width,
-      height: props.height
+      ...layout,
+      position: "relative",
     }}>
-      <a href="https://codeium.com?referrer=codeium-editor">
+      <a href={"https://codeium.com?referrer=codeium-editor"} target="_blank" rel="noreferrer noopener">
         <CodeiumLogo
           width={30}
           height={30}
@@ -92,6 +106,8 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
       <Editor
         {...defaultLanguageProps}
         {...props}
+        width={layout.width}
+        height={layout.height}
         onMount={handleEditorDidMount}
         options={{
           scrollBeyondLastColumn: 0,
