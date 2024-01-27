@@ -19,8 +19,11 @@ import {
 } from "../../api/proto/exa/codeium_common_pb/codeium_common_pb";
 import { Status } from "./Status";
 import { uuid } from "../../utils/uuid";
-
-const PLAYGROUND_API_KEY = "a8a4a691-8432-41c0-b6c8-5b86997aa623";
+import {
+  getBrowserVersion,
+  getCurrentURL,
+  getPackageVersion,
+} from "../../utils/identity";
 
 class MonacoInlineCompletion implements monaco.languages.InlineCompletion {
   readonly insertText: string;
@@ -59,11 +62,11 @@ export class MonacoCompletionProvider {
     readonly setMessage: (message: string) => void
   ) {
     this.metadata = new Metadata({
-      ideName: "playground",
-      ideVersion: "playground",
-      extensionName: "playground",
-      extensionVersion: "monaco",
-      apiKey: PLAYGROUND_API_KEY, // PLAYGROUND_API_KEY
+      ideName: getBrowserVersion() ?? "unknown",
+      ideVersion: getCurrentURL() ?? "unknown",
+      extensionName: "@codeium/react-code-editor",
+      extensionVersion: getPackageVersion() ?? "unknown",
+      apiKey: "d49954eb-cfba-4992-980f-d8fb37f0e942", // PLAYGROUND_API_KEY
       sessionId: `demo-${uuid()}`,
     });
     this.client = grpcClient;
