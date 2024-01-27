@@ -66,7 +66,7 @@ export class MonacoCompletionProvider {
       ideVersion: getCurrentURL() ?? "unknown",
       extensionName: "@codeium/react-code-editor",
       extensionVersion: getPackageVersion() ?? "unknown",
-      apiKey: "a8a4a691-8432-41c0-b6c8-5b86997aa623", // PLAYGROUND_API_KEY
+      apiKey: "d49954eb-cfba-4992-980f-d8fb37f0e942", // PLAYGROUND_API_KEY
       sessionId: `demo-${uuid()}`,
     });
     this.client = grpcClient;
