@@ -2,8 +2,7 @@
   "name": "@codeium/react-code-editor",
   "version": "1.0.5",
   "description": "AI-powered React component",
-  "main": "dist/index.js",
-  "type": "module",
+  "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
   "files": [
     "dist/**"
@@ -15,7 +14,7 @@
   "packageManager": "pnpm@8.9.0",
   "scripts": {
     "generate": "rm -rf ./src/proto && node generate.js",
-    "rollup": "rollup -c",
+    "rollup": "rollup -c --bundleConfigAsCjs",
     "clean": "rm -rf node_modules && rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "storybook": "storybook dev -p 6006 --no-open",
