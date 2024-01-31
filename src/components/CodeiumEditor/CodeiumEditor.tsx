@@ -14,6 +14,7 @@ import { CodeiumLogo } from "../CodeiumLogo/CodeiumLogo";
 
 interface CodeiumEditorProps extends EditorProps {
   language: string;
+  apiKey?: string;
 }
 
 /**
@@ -44,7 +45,8 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
       grpcClient,
       setCompletionCount,
       setCodeiumStatus,
-      setCodeiumStatusMessage
+      setCodeiumStatusMessage,
+      props.apiKey
     );
 
     monaco.languages.registerInlineCompletionsProvider(
