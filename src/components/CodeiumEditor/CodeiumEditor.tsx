@@ -12,7 +12,7 @@ import { LanguageServerService } from "../../api/proto/exa/language_server_pb/la
 import { InlineCompletionProvider } from "./InlineCompletionProvider";
 import { CodeiumLogo } from "../CodeiumLogo/CodeiumLogo";
 
-interface CodeiumEditorProps extends EditorProps {
+export interface CodeiumEditorProps extends EditorProps {
   language: string;
   apiKey?: string;
   /**
