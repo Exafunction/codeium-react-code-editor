@@ -47,7 +47,7 @@ class MonacoInlineCompletion implements monaco.languages.InlineCompletion {
     };
   }
 }
-
+const EDITOR_API_KEY = "d49954eb-cfba-4992-980f-d8fb37f0e942"
 /**
  * CompletionProvider class for Codeium.
  */
@@ -68,7 +68,7 @@ export class MonacoCompletionProvider {
       ideVersion: getCurrentURL() ?? "unknown",
       extensionName: "@codeium/react-code-editor",
       extensionVersion: getPackageVersion() ?? "unknown",
-      apiKey: apiKey || "d49954eb-cfba-4992-980f-d8fb37f0e942", 
+      apiKey: apiKey ?? EDITOR_API_KEY, 
       sessionId: `demo-${uuid()}`,
     });
     this.client = grpcClient;
