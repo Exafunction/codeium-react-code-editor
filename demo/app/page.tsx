@@ -6,7 +6,7 @@ import { CodeiumEditor } from "@codeium/react-code-editor";
 export default function Home() {
   return (
     <main className={styles.main}>
-      <CodeiumEditor language="python"/>
+      <CodeiumEditor language="python" />
     </main>
   )
 }
