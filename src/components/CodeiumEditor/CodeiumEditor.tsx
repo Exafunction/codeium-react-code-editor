@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import { createConnectTransport } from "@connectrpc/connect-web";
 import { createPromiseClient } from "@connectrpc/connect";
 import { Status } from "./Status";
@@ -15,6 +15,10 @@ import { CodeiumLogo } from "../CodeiumLogo/CodeiumLogo";
 interface CodeiumEditorProps extends EditorProps {
   language: string;
   apiKey?: string;
+  /**
+   * Optional callback to detect when completions are accepted. Includes the accepted text for the completion.
+   */
+  onAutocomplete?: (acceptedText: string) => void;
 }
 
 /**
@@ -23,40 +27,55 @@ interface CodeiumEditorProps extends EditorProps {
  */
 export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
+  const monacoRef = useRef<Monaco | null>(null);
   const inlineCompletionsProviderRef = useRef<InlineCompletionProvider | null>(
     null
   );
+  const [acceptedCompletionCount, setAcceptedCompletionCount] = useState(-1);
   const [completionCount, setCompletionCount] = useState(0);
   const [codeiumStatus, setCodeiumStatus] = useState(Status.INACTIVE);
   const [codeiumStatusMessage, setCodeiumStatusMessage] = useState("");
+  const [mounted, setMounted] = useState(false);
 
-  const handleEditorDidMount = async (
-    editor: editor.IStandaloneCodeEditor,
-    monaco: Monaco
-  ) => {
-    editorRef.current = editor;
-    const transport = createConnectTransport({
+  const transport = useMemo(() => {
+    return createConnectTransport({
       baseUrl: "https://web-backend.codeium.com",
       useBinaryFormat: true,
     });
-    const grpcClient = createPromiseClient(LanguageServerService, transport);
+  }, []);
+  
+  const grpcClient = useMemo(() => {
+    return createPromiseClient(LanguageServerService, transport);
+  }, [transport]);
 
-    inlineCompletionsProviderRef.current = new InlineCompletionProvider(
+  inlineCompletionsProviderRef.current = useMemo(() => {
+    return new InlineCompletionProvider(
       grpcClient,
       setCompletionCount,
       setCodeiumStatus,
       setCodeiumStatusMessage,
       props.apiKey
     );
+  }, []);
 
-    monaco.languages.registerInlineCompletionsProvider(
+  useEffect(() => {
+    if (!editorRef?.current || !monacoRef.current || !inlineCompletionsProviderRef.current) {
+      return;
+    }
+    const monaco = monacoRef.current;
+
+    const providerDisposable = monaco.languages.registerInlineCompletionsProvider(
       { pattern: "**" },
       inlineCompletionsProviderRef.current
     );
-    monaco.editor.registerCommand(
+    const completionDisposable = monaco.editor.registerCommand(
       "codeium.acceptCompletion",
       (_: unknown, completionId: string, insertText: string) => {
         try {
+          if (props.onAutocomplete) {
+            props.onAutocomplete(insertText);
+          }
+          setAcceptedCompletionCount(acceptedCompletionCount + 1);
           inlineCompletionsProviderRef.current?.acceptedLastCompletion(
             completionId
           );
@@ -65,6 +84,20 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
         }
       }
     );
+
+    return () => {
+      providerDisposable.dispose();
+      completionDisposable.dispose();
+    }
+  }, [editorRef?.current, monacoRef?.current, inlineCompletionsProviderRef?.current, acceptedCompletionCount, mounted])
+
+  const handleEditorDidMount = async (
+    editor: editor.IStandaloneCodeEditor,
+    monaco: Monaco
+  ) => {
+    editorRef.current = editor;
+    monacoRef.current = monaco;
+    setMounted(true);
 
     // CORS pre-flight cache optimization.
     try {
