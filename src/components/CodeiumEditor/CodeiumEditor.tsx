@@ -15,7 +15,10 @@ import { CodeiumLogo } from "../CodeiumLogo/CodeiumLogo";
 interface CodeiumEditorProps extends EditorProps {
   language: string;
   apiKey?: string;
-  onAutocomplete?: (insertText: string) => void;
+  /**
+   * Optional callback to detect when completions are accepted. Includes the accepted text for the completion.
+   */
+  onAutocomplete?: (acceptedText: string) => void;
 }
 
 /**
