@@ -22,13 +22,15 @@ export class InlineCompletionProvider
     grpcClient: PromiseClient<typeof LanguageServerService>,
     readonly setCompletionCount: Dispatch<SetStateAction<number>>,
     setCodeiumStatus: Dispatch<SetStateAction<Status>>,
-    setCodeiumStatusMessage: Dispatch<SetStateAction<string>>
+    setCodeiumStatusMessage: Dispatch<SetStateAction<string>>,
+    apiKey?: string | undefined
   ) {
     this.numCompletionsProvided = 0;
     this.completionProvider = new MonacoCompletionProvider(
       grpcClient,
       setCodeiumStatus,
-      setCodeiumStatusMessage
+      setCodeiumStatusMessage,
+      apiKey
     );
   }
 
