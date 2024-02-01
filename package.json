@@ -1,6 +1,6 @@
 {
   "name": "@codeium/react-code-editor",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "AI-powered React component",
   "main": "dist/index.js",
   "type": "module",
@@ -10,7 +10,7 @@
   ],
   "types": "dist/index.d.ts",
   "engines": {
-    "node": ">=20"
+    "node": ">=16"
   },
   "packageManager": "pnpm@8.9.0",
   "scripts": {
