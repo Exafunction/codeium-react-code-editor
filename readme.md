@@ -1,6 +1,6 @@
 # Codeium Editor
 
-[![built with Codeium](https://codeium.com/badges/main)](https://codeium.com/badges/main)
+[![built with Codeium](https://codeium.com/badges/main)](https://codeium.com?referrer=github)
 
 [![NPM](https://nodei.co/npm/@codeium/react-code-editor.png?downloads=true)](https://www.npmjs.com/package/@codeium/react-code-editor)  
 
