@@ -2,7 +2,7 @@
 
 [![built with Codeium](https://codeium.com/badges/main)](https://codeium.com?referrer=github)
 
-[![NPM](https://nodei.co/npm/@codeium/react-code-editor.png?downloads=true)](https://www.npmjs.com/package/@codeium/react-code-editor)  
+[![NPM](https://nodei.co/npm/@codeium/react-code-editor.png?downloads=true)](https://www.npmjs.com/package/@codeium/react-code-editor)
 
 Codeium React Editor is a free, open-source code editor with unlimited AI autocomplete. Brought to you by the team at [Codeium](https://www.codeium.com/). **Free with no account required.**. All you need to do is install our NPM package and you're good to go!
 
@@ -66,6 +66,11 @@ The autocompletes are provided by analyzing the editor's content and predicting 
 ## API
 
 The core API of the editor is the same as that of the wrapped project. You can view the editor API [here](https://github.com/suren-atoyan/monaco-react?tab=readme-ov-file#editor).
+
+## FAQ
+
+#### How can I import the ESM version of this?
+To import the ESM version of this, you can use `import { CodeiumEditor } from "@codeium/react-code-editor/dist/esm";`. This is an open issue in terms of supporting both CommonJS and ESM. If you're interested in contributing and have a fix for this, pull requests are welcome.
 
 ## Acknowledgements
 
