@@ -70,7 +70,13 @@ The core API of the editor is the same as that of the wrapped project. You can v
 ## FAQ
 
 #### How can I import the ESM version of this?
-To import the ESM version of this, you can use `import { CodeiumEditor } from "@codeium/react-code-editor/dist/esm";`. This is an open issue in terms of supporting both CommonJS and ESM. If you're interested in contributing and have a fix for this, pull requests are welcome.
+To import the ESM version of this, you can use `import { CodeiumEditor } from "@codeium/react-code-editor/dist/esm";`. If you're using TypeScript, your editor might warn that the types are missing. A current workaround is:
+- Create a `codeiumeditor.d.ts` file,
+- Add `declare module '@codeium/react-code-editor/dist/esm';` to the file
+- Import the types file in the file using the `CodeiumEditor` component.
+
+
+This is an open issue in terms of supporting both CommonJS and ESM. If you're interested in contributing and have a fix for this, pull requests are welcome.
 
 ## Acknowledgements
 
