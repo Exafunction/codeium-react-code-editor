@@ -4,13 +4,13 @@
 
 [![NPM](https://nodei.co/npm/@codeium/react-code-editor.png?downloads=true)](https://www.npmjs.com/package/@codeium/react-code-editor)  
 
-Codeium React Editor is a free, open-source code editor with unlimited autocomplete. Brought to you by the team at [Codeium](https://www.codeium.com/). **Free with no account required.**
+Codeium React Editor is a free, open-source code editor with unlimited AI autocomplete. Brought to you by the team at [Codeium](https://www.codeium.com/). **Free with no account required.**. All you need to do is install our NPM package and you're good to go!
 
-![codeium demo](docs/codeium_demo.gif)
+![codeium demo](docs/codeium_playground.gif)
 
 ## Features
 
-- Unlimited autocomplete (no account required)
+- Unlimited AI autocomplete (no account required)
 - Customizable API extended from [Monaco React](https://github.com/suren-atoyan/monaco-react?tab=readme-ov-file#editor)
 
 ## Demo
@@ -32,7 +32,7 @@ yarn add @codeium/react-code-editor
 pnpm install @codeium/react-code-editor
 ```
 
-Now import the `CodeiumEditor` and enjoy lightning fast autocomplete, directly in your browser, 100% for free!
+Now import the `CodeiumEditor` and enjoy lightning fast AI autocomplete, directly in your browser, 100% for free!
 
 ```tsx
 import { CodeiumEditor } from "@codeium/react-code-editor";
@@ -58,6 +58,10 @@ Here are some examples of Codeium React Editor used in production:
 This project is a wrapper around Microsoft's Monaco editor which is the editor that powers VS Code with the extended capability of providing code autocompletion.
 
 The autocompletes are provided by analyzing the editor's content and predicting and providing suggestions based on that context. To learn more about how the autocompletion works, visit [Codeium's FAQ](https://codeium.com/faq).
+
+## What is Codeium
+
+[Codeium](https://www.codeium.com?referrer=github) is a free, AI-powered developer toolkit that plugs into 70+ IDEs, including: Visual Studio Code, JetBrains IDEs, Google Colab, and Vim. Codeium provides unlimited AI context-aware autocomplete, chat assistant, intelligent search, codebase indexing, and more. Codeium also offers flexible deployments within your VPC or in on-prem, airgapped environments. Learn more at [codeium.com](https://www.codeium.com?referrer=github).
 
 ## API
 
