@@ -20,6 +20,7 @@ import {
 import { Status } from "./Status";
 import { uuid } from "../../utils/uuid";
 import {
+  getBrowserVersion,
   getCurrentURL,
   getPackageVersion,
 } from "../../utils/identity";
@@ -64,7 +65,7 @@ export class MonacoCompletionProvider {
   ) {
     this.metadata = new Metadata({
       ideName: "web",
-      ideVersion: getCurrentURL() ?? "unknown",
+      ideVersion: getBrowserVersion(),
       extensionName: "@codeium/react-code-editor",
       extensionVersion: getPackageVersion() ?? "unknown",
       apiKey: apiKey ?? EDITOR_API_KEY,
