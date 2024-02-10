@@ -10,14 +10,6 @@ export const getCurrentURL = () => {
   }
 };
 
-export const getBrowserVersion = () => {
-  try {
-    return window.navigator.userAgent;
-  } catch (e) {
-    return null;
-  }
-};
-
 /**
  * Get the current package version. If this fails, a null string is returned.
  */

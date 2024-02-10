@@ -20,7 +20,6 @@ import {
 import { Status } from "./Status";
 import { uuid } from "../../utils/uuid";
 import {
-  getBrowserVersion,
   getCurrentURL,
   getPackageVersion,
 } from "../../utils/identity";
@@ -64,11 +63,11 @@ export class MonacoCompletionProvider {
 
   ) {
     this.metadata = new Metadata({
-      ideName: getBrowserVersion() ?? "unknown",
+      ideName: "web",
       ideVersion: getCurrentURL() ?? "unknown",
       extensionName: "@codeium/react-code-editor",
       extensionVersion: getPackageVersion() ?? "unknown",
-      apiKey: apiKey ?? EDITOR_API_KEY, 
+      apiKey: apiKey ?? EDITOR_API_KEY,
       sessionId: `demo-${uuid()}`,
     });
     this.client = grpcClient;
