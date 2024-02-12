@@ -73,7 +73,7 @@ export class MonacoCompletionProvider {
 
   private getMetadata(): Metadata {
     return new Metadata({
-      ideName: getBrowserVersion() ?? "unknown",
+      ideName: "web",
       ideVersion: getCurrentURL() ?? "unknown",
       extensionName: "@codeium/react-code-editor",
       extensionVersion: getPackageVersion() ?? "unknown",
