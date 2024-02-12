@@ -78,7 +78,7 @@ export class MonacoCompletionProvider {
       extensionName: "@codeium/react-code-editor",
       extensionVersion: getPackageVersion() ?? "unknown",
       apiKey: this.apiKey ?? EDITOR_API_KEY,
-      sessionId: `demo-${uuid()}`,
+      sessionId: this.sessionId,
     });
   }
 
