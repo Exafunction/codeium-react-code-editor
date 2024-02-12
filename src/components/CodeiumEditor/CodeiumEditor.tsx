@@ -19,13 +19,22 @@ export interface CodeiumEditorProps extends EditorProps {
    * Optional callback to detect when completions are accepted. Includes the accepted text for the completion.
    */
   onAutocomplete?: (acceptedText: string) => void;
+
+  /**
+   * Optional address of the Language Server. This should not be needed for most use cases. Defaults
+   * to Codeium's language server.
+   */
+  languageServerAddress?: string;
 }
 
 /**
  * Code editor that enables Codeium AI suggestions in the editor.
  * The layout by default is width = 100% and height = 300px. These values can be overridden by passing in a string value to the width and/or height props.
  */
-export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
+export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
+  languageServerAddress = "https://web-backend.codeium.com",
+  ...props
+}) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
   const inlineCompletionsProviderRef = useRef<InlineCompletionProvider | null>(
@@ -39,11 +48,11 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
 
   const transport = useMemo(() => {
     return createConnectTransport({
-      baseUrl: "https://web-backend.codeium.com",
+      baseUrl: languageServerAddress,
       useBinaryFormat: true,
     });
-  }, []);
-  
+  }, [languageServerAddress]);
+
   const grpcClient = useMemo(() => {
     return createPromiseClient(LanguageServerService, transport);
   }, [transport]);
@@ -59,15 +68,20 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
   }, []);
 
   useEffect(() => {
-    if (!editorRef?.current || !monacoRef.current || !inlineCompletionsProviderRef.current) {
+    if (
+      !editorRef?.current ||
+      !monacoRef.current ||
+      !inlineCompletionsProviderRef.current
+    ) {
       return;
     }
     const monaco = monacoRef.current;
 
-    const providerDisposable = monaco.languages.registerInlineCompletionsProvider(
-      { pattern: "**" },
-      inlineCompletionsProviderRef.current
-    );
+    const providerDisposable =
+      monaco.languages.registerInlineCompletionsProvider(
+        { pattern: "**" },
+        inlineCompletionsProviderRef.current
+      );
     const completionDisposable = monaco.editor.registerCommand(
       "codeium.acceptCompletion",
       (_: unknown, completionId: string, insertText: string) => {
@@ -88,8 +102,14 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
     return () => {
       providerDisposable.dispose();
       completionDisposable.dispose();
-    }
-  }, [editorRef?.current, monacoRef?.current, inlineCompletionsProviderRef?.current, acceptedCompletionCount, mounted])
+    };
+  }, [
+    editorRef?.current,
+    monacoRef?.current,
+    inlineCompletionsProviderRef?.current,
+    acceptedCompletionCount,
+    mounted,
+  ]);
 
   const handleEditorDidMount = async (
     editor: editor.IStandaloneCodeEditor,
@@ -127,11 +147,17 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
   };
 
   return (
-    <div style={{
-      ...layout,
-      position: "relative",
-    }}>
-      <a href={"https://codeium.com?referrer=codeium-editor"} target="_blank" rel="noreferrer noopener">
+    <div
+      style={{
+        ...layout,
+        position: "relative",
+      }}
+    >
+      <a
+        href={"https://codeium.com?referrer=codeium-editor"}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
         <CodeiumLogo
           width={30}
           height={30}
@@ -163,7 +189,7 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = (props) => {
           links: false,
           fontSize: 14,
           wordWrap: "on",
-          ...props.options
+          ...props.options,
         }}
       />
     </div>

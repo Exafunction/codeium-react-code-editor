@@ -47,33 +47,39 @@ class MonacoInlineCompletion implements monaco.languages.InlineCompletion {
     };
   }
 }
-const EDITOR_API_KEY = "d49954eb-cfba-4992-980f-d8fb37f0e942"
+const EDITOR_API_KEY = "d49954eb-cfba-4992-980f-d8fb37f0e942";
 /**
  * CompletionProvider class for Codeium.
  */
 export class MonacoCompletionProvider {
   authHeader: Record<string, string> = {};
-  private metadata: Metadata;
   private client: PromiseClient<typeof LanguageServerService>;
+  private sessionId: string;
 
   constructor(
     grpcClient: PromiseClient<typeof LanguageServerService>,
     readonly setStatus: (status: Status) => void,
     readonly setMessage: (message: string) => void,
     readonly apiKey?: string | undefined
-
   ) {
-    this.metadata = new Metadata({
+    this.sessionId = `react-editor-${uuid()}`;
+    this.client = grpcClient;
+
+    const Authorization = `Basic ${this.getMetadata().apiKey}-${
+      this.sessionId
+    }`;
+    this.authHeader = { Authorization };
+  }
+
+  private getMetadata(): Metadata {
+    return new Metadata({
       ideName: "web",
-      ideVersion: getBrowserVersion(),
+      ideVersion: getBrowserVersion() ?? "unknown",
       extensionName: "@codeium/react-code-editor",
       extensionVersion: getPackageVersion() ?? "unknown",
-      apiKey: apiKey ?? EDITOR_API_KEY,
+      apiKey: this.apiKey ?? EDITOR_API_KEY,
       sessionId: `demo-${uuid()}`,
     });
-    this.client = grpcClient;
-    const Authorization = `Basic ${this.metadata.apiKey}-${this.metadata.sessionId}`;
-    this.authHeader = { Authorization };
   }
 
   /**
@@ -118,7 +124,7 @@ export class MonacoCompletionProvider {
     try {
       getCompletionsResponse = await this.client.getCompletions(
         {
-          metadata: this.metadata,
+          metadata: this.getMetadata(),
           document: documentInfo,
           editorOptions: editorOptions,
         },
@@ -172,17 +178,20 @@ export class MonacoCompletionProvider {
    */
   public acceptedLastCompletion(completionId: string) {
     new Promise((resolve, reject) => {
-      this.client.acceptCompletion(
-        {
-          metadata: this.metadata,
-          completionId: completionId,
-        },
-        {
-          headers: this.authHeader,
-        }
-      ).then(resolve).catch((err) => {
-        console.log("Error: ", err)
-      });
+      this.client
+        .acceptCompletion(
+          {
+            metadata: this.getMetadata(),
+            completionId: completionId,
+          },
+          {
+            headers: this.authHeader,
+          }
+        )
+        .then(resolve)
+        .catch((err) => {
+          console.log("Error: ", err);
+        });
     });
   }
 
