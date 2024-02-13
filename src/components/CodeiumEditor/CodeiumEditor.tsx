@@ -12,6 +12,7 @@ import { LanguageServerService } from '../../api/proto/exa/language_server_pb/la
 import { InlineCompletionProvider } from './InlineCompletionProvider';
 import { CodeiumLogo } from '../CodeiumLogo/CodeiumLogo';
 import { Document } from '../../models';
+import { deepMerge } from '../../utils/merge';
 
 export interface CodeiumEditorProps extends EditorProps {
   language: string;
@@ -184,26 +185,28 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
         width={layout.width}
         height={layout.height}
         onMount={handleEditorDidMount}
-        options={{
-          scrollBeyondLastColumn: 0,
-          scrollbar: {
-            alwaysConsumeMouseWheel: false,
+        options={deepMerge<editor.IStandaloneEditorConstructionOptions>(
+          props.options,
+          {
+            scrollBeyondLastColumn: 0,
+            scrollbar: {
+              alwaysConsumeMouseWheel: false,
+            },
+            codeLens: false,
+            // for resizing, but apparently might have "severe performance impact"
+            // automaticLayout: true,
+            minimap: {
+              enabled: false,
+            },
+            quickSuggestions: false,
+            folding: false,
+            foldingHighlight: false,
+            foldingImportsByDefault: false,
+            links: false,
+            fontSize: 14,
+            wordWrap: 'on',
           },
-          codeLens: false,
-          // for resizing, but apparently might have "severe performance impact"
-          // automaticLayout: true,
-          minimap: {
-            enabled: false,
-          },
-          quickSuggestions: false,
-          folding: false,
-          foldingHighlight: false,
-          foldingImportsByDefault: false,
-          links: false,
-          fontSize: 14,
-          wordWrap: 'on',
-          ...props.options,
-        }}
+        )}
       />
     </div>
   );
