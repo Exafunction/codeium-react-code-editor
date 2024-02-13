@@ -1,4 +1,5 @@
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import { Document as DocumentInfo } from "../../api/proto/exa/language_server_pb/language_server_pb";
 import { Dispatch, SetStateAction } from "react";
 import { PromiseClient } from "@connectrpc/connect";
 import { Status } from "./Status";
@@ -18,6 +19,7 @@ export class InlineCompletionProvider
 {
   private numCompletionsProvided: number;
   readonly completionProvider: MonacoCompletionProvider;
+
   constructor(
     grpcClient: PromiseClient<typeof LanguageServerService>,
     readonly setCompletionCount: Dispatch<SetStateAction<number>>,
@@ -62,5 +64,9 @@ export class InlineCompletionProvider
 
   public acceptedLastCompletion(completionId: string) {
     this.completionProvider.acceptedLastCompletion(completionId);
+  }
+
+  public updateOtherDocuments(otherDocuments: DocumentInfo[]) {
+    this.completionProvider.otherDocuments = otherDocuments;
   }
 }
