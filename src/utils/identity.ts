@@ -23,7 +23,7 @@ export const getBrowserVersion = () => {
  */
 export const getPackageVersion = () => {
   try {
-    return require("../../package.json").version;
+    return require('../../package.json').version;
   } catch (e) {
     return null;
   }

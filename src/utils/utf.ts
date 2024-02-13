@@ -27,7 +27,7 @@ function numUtf8BytesForCodePoint(codePointValue: number): number {
  */
 export function numCodeUnitsToNumUtf8Bytes(
   text: string,
-  numCodeUnits?: number
+  numCodeUnits?: number,
 ): number {
   if (numCodeUnits === 0) {
     return 0;
@@ -46,7 +46,7 @@ export function numCodeUnitsToNumUtf8Bytes(
 
 export function numUtf8BytesToNumCodeUnits(
   text: string,
-  numUtf8Bytes?: number
+  numUtf8Bytes?: number,
 ): number {
   if (numUtf8Bytes === 0) {
     return 0;

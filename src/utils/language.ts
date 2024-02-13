@@ -1,139 +1,139 @@
-import { Language } from "../models";
+import { Language } from '../models';
 
 /**
  * Converts a language ID to a strongly-typed enum value.
  */
 export const languageIdToEnum = (languageId: string): Language => {
   switch (languageId.toLowerCase()) {
-    case "c":
+    case 'c':
       return Language.C;
-    case "clojure":
+    case 'clojure':
       return Language.CLOJURE;
-    case "coffeescript":
+    case 'coffeescript':
       return Language.COFFEESCRIPT;
-    case "cpp":
+    case 'cpp':
       return Language.CPP;
-    case "csharp":
+    case 'csharp':
       return Language.CSHARP;
-    case "css":
+    case 'css':
       return Language.CSS;
-    case "cudacpp":
+    case 'cudacpp':
       return Language.CUDACPP;
-    case "dockerfile":
+    case 'dockerfile':
       return Language.DOCKERFILE;
-    case "go":
+    case 'go':
       return Language.GO;
-    case "groovy":
+    case 'groovy':
       return Language.GROOVY;
-    case "handlebars":
+    case 'handlebars':
       return Language.HANDLEBARS;
-    case "haskell":
+    case 'haskell':
       return Language.HASKELL;
-    case "hcl":
+    case 'hcl':
       return Language.HCL;
-    case "html":
+    case 'html':
       return Language.HTML;
-    case "ini":
+    case 'ini':
       return Language.INI;
-    case "java":
+    case 'java':
       return Language.JAVA;
-    case "javascript":
+    case 'javascript':
       return Language.JAVASCRIPT;
-    case "json":
+    case 'json':
       return Language.JSON;
-    case "julia":
+    case 'julia':
       return Language.JULIA;
-    case "kotlin":
+    case 'kotlin':
       return Language.KOTLIN;
-    case "latex":
+    case 'latex':
       return Language.LATEX;
-    case "less":
+    case 'less':
       return Language.LESS;
-    case "lua":
+    case 'lua':
       return Language.LUA;
-    case "makefile":
+    case 'makefile':
       return Language.MAKEFILE;
-    case "markdown":
+    case 'markdown':
       return Language.MARKDOWN;
-    case "objectivec":
+    case 'objectivec':
       return Language.OBJECTIVEC;
-    case "objectivecpp":
+    case 'objectivecpp':
       return Language.OBJECTIVECPP;
-    case "perl":
+    case 'perl':
       return Language.PERL;
-    case "php":
+    case 'php':
       return Language.PHP;
-    case "plaintext":
+    case 'plaintext':
       return Language.PLAINTEXT;
-    case "protobuf":
+    case 'protobuf':
       return Language.PROTOBUF;
-    case "pbtxt":
+    case 'pbtxt':
       return Language.PBTXT;
-    case "python":
+    case 'python':
       return Language.PYTHON;
-    case "r":
+    case 'r':
       return Language.R;
-    case "ruby":
+    case 'ruby':
       return Language.RUBY;
-    case "rust":
+    case 'rust':
       return Language.RUST;
-    case "sass":
+    case 'sass':
       return Language.SASS;
-    case "scala":
+    case 'scala':
       return Language.SCALA;
-    case "scss":
+    case 'scss':
       return Language.SCSS;
-    case "shell":
+    case 'shell':
       return Language.SHELL;
-    case "sql":
+    case 'sql':
       return Language.SQL;
-    case "starlark":
+    case 'starlark':
       return Language.STARLARK;
-    case "swift":
+    case 'swift':
       return Language.SWIFT;
-    case "tsx":
+    case 'tsx':
       return Language.TSX;
-    case "typescript":
+    case 'typescript':
       return Language.TYPESCRIPT;
-    case "visualbasic":
+    case 'visualbasic':
       return Language.VISUALBASIC;
-    case "vue":
+    case 'vue':
       return Language.VUE;
-    case "xml":
+    case 'xml':
       return Language.XML;
-    case "xsl":
+    case 'xsl':
       return Language.XSL;
-    case "yaml":
+    case 'yaml':
       return Language.YAML;
-    case "svelte":
+    case 'svelte':
       return Language.SVELTE;
-    case "toml":
+    case 'toml':
       return Language.TOML;
-    case "dart":
+    case 'dart':
       return Language.DART;
-    case "rst":
+    case 'rst':
       return Language.RST;
-    case "ocaml":
+    case 'ocaml':
       return Language.OCAML;
-    case "cmake":
+    case 'cmake':
       return Language.CMAKE;
-    case "pascal":
+    case 'pascal':
       return Language.PASCAL;
-    case "elixir":
+    case 'elixir':
       return Language.ELIXIR;
-    case "fsharp":
+    case 'fsharp':
       return Language.FSHARP;
-    case "lisp":
+    case 'lisp':
       return Language.LISP;
-    case "matlab":
+    case 'matlab':
       return Language.MATLAB;
-    case "powershell":
+    case 'powershell':
       return Language.POWERSHELL;
-    case "solidity":
+    case 'solidity':
       return Language.SOLIDITY;
-    case "ada":
+    case 'ada':
       return Language.ADA;
-    case "ocaml_interface":
+    case 'ocaml_interface':
       return Language.OCAML_INTERFACE;
     default:
       return Language.UNSPECIFIED;
