@@ -52,6 +52,11 @@ export class MonacoCompletionProvider {
   private client: PromiseClient<typeof LanguageServerService>;
   private sessionId: string;
 
+  /**
+   * A list of other documents to include as context in the prompt.
+   */
+  public otherDocuments: DocumentInfo[] = [];
+
   constructor(
     grpcClient: PromiseClient<typeof LanguageServerService>,
     readonly setStatus: (status: Status) => void,
@@ -119,6 +124,18 @@ export class MonacoCompletionProvider {
       insertSpaces: model.getOptions().insertSpaces,
     };
 
+    let includedOtherDocs = this.otherDocuments;
+    if (includedOtherDocs.length > 10) {
+      console.warn(
+        `Too many other documents: ${includedOtherDocs.length} (max 10)`
+      );
+      includedOtherDocs = includedOtherDocs.slice(0, 10);
+    }
+    console.log(
+      `Included other documents: ${includedOtherDocs.length}`,
+      includedOtherDocs.map((d) => d.toJson())
+    );
+
     // Get completions.
     let getCompletionsResponse: GetCompletionsResponse;
     try {
@@ -127,6 +144,7 @@ export class MonacoCompletionProvider {
           metadata: this.getMetadata(),
           document: documentInfo,
           editorOptions: editorOptions,
+          otherDocuments: includedOtherDocs,
         },
         {
           signal,

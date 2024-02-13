@@ -11,6 +11,7 @@ import { getDefaultValue } from "./defaultValues";
 import { LanguageServerService } from "../../api/proto/exa/language_server_pb/language_server_connect";
 import { InlineCompletionProvider } from "./InlineCompletionProvider";
 import { CodeiumLogo } from "../CodeiumLogo/CodeiumLogo";
+import { Document } from "../../models";
 
 export interface CodeiumEditorProps extends EditorProps {
   language: string;
@@ -25,6 +26,13 @@ export interface CodeiumEditorProps extends EditorProps {
    * to Codeium's language server.
    */
   languageServerAddress?: string;
+
+  /**
+   * Optional list of other documents in the workspace. This can be used to provide additional
+   * context to Codeium beyond simply the current document. There is a limit of 10 medium sized
+   * documents.
+   */
+  otherDocuments?: Document[];
 }
 
 /**
@@ -33,6 +41,7 @@ export interface CodeiumEditorProps extends EditorProps {
  */
 export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
   languageServerAddress = "https://web-backend.codeium.com",
+  otherDocuments = [],
   ...props
 }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
@@ -131,6 +140,11 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
       props.onMount(editor, monaco);
     }
   };
+
+  // Keep other documents up to date.
+  useEffect(() => {
+    inlineCompletionsProviderRef.current?.updateOtherDocuments(otherDocuments);
+  }, [otherDocuments]);
 
   let defaultLanguageProps: EditorProps = {
     defaultLanguage: props.language,
