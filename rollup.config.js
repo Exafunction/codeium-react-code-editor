@@ -5,6 +5,9 @@ import dts from "rollup-plugin-dts";
 import banner2 from 'rollup-plugin-banner2'
 import packageJson from "./package.json" assert { type: "json" };
 
+const version = packageJson.version ?? null;
+
+
 export default [
   {
     input: "src/index.ts",
@@ -26,7 +29,11 @@ export default [
       commonjs(),
       typescript({ tsconfig: "./tsconfig.json" }),
       banner2(() => `
-        "use client";
+"use client";
+
+if (typeof window !== "undefined") {
+  window.CODEIUM_REACT_CODE_VERSION = ${version ? `${JSON.stringify(version)}` : null};
+}
       `)
     ],
   },
