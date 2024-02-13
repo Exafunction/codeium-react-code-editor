@@ -1,6 +1,6 @@
 {
   "name": "@codeium/react-code-editor",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "AI-powered React component",
   "main": "dist/index.js",
   "type": "module",
