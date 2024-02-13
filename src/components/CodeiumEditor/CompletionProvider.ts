@@ -131,6 +131,10 @@ export class MonacoCompletionProvider {
       );
       includedOtherDocs = includedOtherDocs.slice(0, 10);
     }
+    console.log(
+      `Included other documents: ${includedOtherDocs.length}`,
+      includedOtherDocs.map((d) => d.toJson())
+    );
 
     // Get completions.
     let getCompletionsResponse: GetCompletionsResponse;

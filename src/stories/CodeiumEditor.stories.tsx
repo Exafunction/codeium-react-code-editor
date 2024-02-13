@@ -168,11 +168,13 @@ export const MultiFileContext: Story = {
     ...baseParams,
     language: "javascript",
     value: `// You have context over a sample HTML page.
-// Codeium's generation will take this context into account when suggesting.`,
+// Codeium's generation will take this context into account when suggesting.
+
+// Get the contact form values by ID.`,
     otherDocuments: [
       new Document({
         absolutePath: "/index.html",
-        relativePath: "/index.html",
+        relativePath: "index.html",
         text: HTML_SNIPPET,
         editorLanguage: "html",
         language: Language.HTML,
