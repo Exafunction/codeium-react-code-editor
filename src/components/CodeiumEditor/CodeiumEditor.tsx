@@ -32,7 +32,6 @@ export interface CodeiumEditorProps extends EditorProps {
  * The layout by default is width = 100% and height = 300px. These values can be overridden by passing in a string value to the width and/or height props.
  */
 export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
-  language,
   languageServerAddress = "https://web-backend.codeium.com",
   ...props
 }) => {
@@ -134,8 +133,8 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
   };
 
   let defaultLanguageProps: EditorProps = {
-    defaultLanguage: language,
-    defaultValue: getDefaultValue(language),
+    defaultLanguage: props.language,
+    defaultValue: getDefaultValue(props.language),
   };
 
   const layout = {
