@@ -52,7 +52,7 @@ Here's an advanced example that uses multi-document context to provide more inte
 ```tsx
 import { CodeiumEditor, Document, Language } from "@codeium/react-code-editor";
 
-export const JavascriptEditorWithContext = () => {
+export const JavaScriptEditorWithContext = () => {
   const html = `<html>
   <body>
     <h1>Contact Us</h1>
@@ -85,6 +85,8 @@ export const JavascriptEditorWithContext = () => {
   );
 };
 ```
+
+Note that the `otherDocuments` prop has a limit of 10 documents. Within those documents, Codeium will run a reranker behind the scenes to optimize what is included in the token limit.
 
 ### Examples
 
