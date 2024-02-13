@@ -23,7 +23,8 @@ export const getBrowserVersion = () => {
  */
 export const getPackageVersion = () => {
   try {
-    return require('../../package.json').version;
+    // @ts-ignore
+    return window.CODEIUM_REACT_CODE_VERSION ? window.CODEIUM_REACT_CODE_VERSION : null;
   } catch (e) {
     return null;
   }
