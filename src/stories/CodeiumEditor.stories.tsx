@@ -120,6 +120,23 @@ export const CppEditor: Story = {
   },
 };
 
+const MARKDOWN_SNIPPET = `# Readme Template
+Author: [Your Name]
+
+This is a template for your README.md file.
+
+## Features
+
+List of features:`;
+
+export const MarkdownEditor: Story = {
+  args: {
+    ...baseParams,
+    language: 'markdown',
+    value: MARKDOWN_SNIPPET,
+  },
+};
+
 const HTML_SNIPPET = `<html>
   <head>
     <title>Contact Form</title>
