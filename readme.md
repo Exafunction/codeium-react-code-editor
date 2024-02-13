@@ -47,6 +47,47 @@ export const IdeWithAutocomplete = () => {
 };
 ```
 
+Here's an advanced example that uses multi-document context to provide more intelligent autocompletion:
+
+```tsx
+import { CodeiumEditor, Document, Language } from "@codeium/react-code-editor";
+
+export const JavaScriptEditorWithContext = () => {
+  const html = `<html>
+  <body>
+    <h1>Contact Us</h1>
+    <form>
+      <label>Name:</label>
+      <input id="name" type="text" />
+      <label>Email:</label>
+      <input id="email" type="text" />
+    </form>
+  </body>
+</html>`;
+
+  return (
+    <div>
+      <p>This editor has context awareness of a neighboring HTML file and can provide better autocompletion suggestions.</p>
+      <CodeiumEditor
+        language="javascript"
+        theme="vs-dark"
+        otherDocuments={[
+          new Document({
+            absolutePath: "/app/index.html",
+            relativePath: "index.html",
+            text: html,
+            editorLanguage: "html",
+            language: Language.HTML,
+          }),
+        ]}
+      />
+    </div>
+  );
+};
+```
+
+Note that the `otherDocuments` prop has a limit of 10 documents. Within those documents, Codeium will run a reranker behind the scenes to optimize what is included in the token limit.
+
 ### Examples
 
 Here are some examples of Codeium React Editor used in production:
@@ -70,11 +111,12 @@ The core API of the editor is the same as that of the wrapped project. You can v
 ## FAQ
 
 #### How can I import the ESM version of this?
+
 To import the ESM version of this, you can use `import { CodeiumEditor } from "@codeium/react-code-editor/dist/esm";`. If you're using TypeScript, your editor might warn that the types are missing. A current workaround is:
+
 - Create a `codeiumeditor.d.ts` file,
 - Add `declare module '@codeium/react-code-editor/dist/esm';` to the file
 - Import the types file in the file using the `CodeiumEditor` component.
-
 
 This is an open issue in terms of supporting both CommonJS and ESM. If you're interested in contributing and have a fix for this, pull requests are welcome.
 

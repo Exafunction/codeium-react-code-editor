@@ -2,11 +2,11 @@
  * Status of the Codeium AI completions generation.
  */
 export enum Status {
-  INACTIVE = "inactive",
-  PROCESSING = "processing",
-  SUCCESS = "success",
-  WARNING = "warning",
-  ERROR = "error",
+  INACTIVE = 'inactive',
+  PROCESSING = 'processing',
+  SUCCESS = 'success',
+  WARNING = 'warning',
+  ERROR = 'error',
 }
 
 /**

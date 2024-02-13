@@ -1,4 +1,4 @@
-import { Range } from "./Location";
+import { Range } from './Location';
 
 export class Line {
   readonly text: string;

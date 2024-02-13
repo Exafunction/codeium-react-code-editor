@@ -1,16 +1,17 @@
-"use client";
+'use client';
 
-import React, { useEffect, useRef, useState, useMemo } from "react";
-import { createConnectTransport } from "@connectrpc/connect-web";
-import { createPromiseClient } from "@connectrpc/connect";
-import { Status } from "./Status";
-import Editor, { EditorProps, Monaco } from "@monaco-editor/react";
-import { editor } from "monaco-editor/esm/vs/editor/editor.api";
-import { getDefaultValue } from "./defaultValues";
+import React, { useEffect, useRef, useState, useMemo } from 'react';
+import { createConnectTransport } from '@connectrpc/connect-web';
+import { createPromiseClient } from '@connectrpc/connect';
+import { Status } from './Status';
+import Editor, { EditorProps, Monaco } from '@monaco-editor/react';
+import { editor } from 'monaco-editor/esm/vs/editor/editor.api';
+import { getDefaultValue } from './defaultValues';
 
-import { LanguageServerService } from "../../api/proto/exa/language_server_pb/language_server_connect";
-import { InlineCompletionProvider } from "./InlineCompletionProvider";
-import { CodeiumLogo } from "../CodeiumLogo/CodeiumLogo";
+import { LanguageServerService } from '../../api/proto/exa/language_server_pb/language_server_connect';
+import { InlineCompletionProvider } from './InlineCompletionProvider';
+import { CodeiumLogo } from '../CodeiumLogo/CodeiumLogo';
+import { Document } from '../../models';
 
 export interface CodeiumEditorProps extends EditorProps {
   language: string;
@@ -25,6 +26,13 @@ export interface CodeiumEditorProps extends EditorProps {
    * to Codeium's language server.
    */
   languageServerAddress?: string;
+
+  /**
+   * Optional list of other documents in the workspace. This can be used to provide additional
+   * context to Codeium beyond simply the current document. There is a limit of 10 medium sized
+   * documents.
+   */
+  otherDocuments?: Document[];
 }
 
 /**
@@ -32,18 +40,19 @@ export interface CodeiumEditorProps extends EditorProps {
  * The layout by default is width = 100% and height = 300px. These values can be overridden by passing in a string value to the width and/or height props.
  */
 export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
-  languageServerAddress = "https://web-backend.codeium.com",
+  languageServerAddress = 'https://web-backend.codeium.com',
+  otherDocuments = [],
   ...props
 }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const monacoRef = useRef<Monaco | null>(null);
   const inlineCompletionsProviderRef = useRef<InlineCompletionProvider | null>(
-    null
+    null,
   );
   const [acceptedCompletionCount, setAcceptedCompletionCount] = useState(-1);
   const [completionCount, setCompletionCount] = useState(0);
   const [codeiumStatus, setCodeiumStatus] = useState(Status.INACTIVE);
-  const [codeiumStatusMessage, setCodeiumStatusMessage] = useState("");
+  const [codeiumStatusMessage, setCodeiumStatusMessage] = useState('');
   const [mounted, setMounted] = useState(false);
 
   const transport = useMemo(() => {
@@ -63,7 +72,7 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
       setCompletionCount,
       setCodeiumStatus,
       setCodeiumStatusMessage,
-      props.apiKey
+      props.apiKey,
     );
   }, []);
 
@@ -79,11 +88,11 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
 
     const providerDisposable =
       monaco.languages.registerInlineCompletionsProvider(
-        { pattern: "**" },
-        inlineCompletionsProviderRef.current
+        { pattern: '**' },
+        inlineCompletionsProviderRef.current,
       );
     const completionDisposable = monaco.editor.registerCommand(
-      "codeium.acceptCompletion",
+      'codeium.acceptCompletion',
       (_: unknown, completionId: string, insertText: string) => {
         try {
           if (props.onAutocomplete) {
@@ -91,12 +100,12 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
           }
           setAcceptedCompletionCount(acceptedCompletionCount + 1);
           inlineCompletionsProviderRef.current?.acceptedLastCompletion(
-            completionId
+            completionId,
           );
         } catch (err) {
-          console.log("Err");
+          console.log('Err');
         }
-      }
+      },
     );
 
     return () => {
@@ -113,7 +122,7 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
 
   const handleEditorDidMount = async (
     editor: editor.IStandaloneCodeEditor,
-    monaco: Monaco
+    monaco: Monaco,
   ) => {
     editorRef.current = editor;
     monacoRef.current = monaco;
@@ -132,36 +141,41 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
     }
   };
 
+  // Keep other documents up to date.
+  useEffect(() => {
+    inlineCompletionsProviderRef.current?.updateOtherDocuments(otherDocuments);
+  }, [otherDocuments]);
+
   let defaultLanguageProps: EditorProps = {
     defaultLanguage: props.language,
     defaultValue: getDefaultValue(props.language),
   };
 
   const layout = {
-    width: props.width || "100%",
+    width: props.width || '100%',
     // The height is set to 300px by default. Otherwise, the editor when
     // rendered with the default value will not be visible.
     // The monaco editor's default height is 100% but it requires the user to
     // define a container with an explicit height.
-    height: props.height || "300px",
+    height: props.height || '300px',
   };
 
   return (
     <div
       style={{
         ...layout,
-        position: "relative",
+        position: 'relative',
       }}
     >
       <a
-        href={"https://codeium.com?referrer=codeium-editor"}
+        href={'https://codeium.com?referrer=codeium-editor'}
         target="_blank"
         rel="noreferrer noopener"
       >
         <CodeiumLogo
           width={30}
           height={30}
-          style={{ position: "absolute", top: 12, right: 12, zIndex: 1 }}
+          style={{ position: 'absolute', top: 12, right: 12, zIndex: 1 }}
         />
       </a>
       <Editor
@@ -187,7 +201,7 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
           foldingImportsByDefault: false,
           links: false,
           fontSize: 14,
-          wordWrap: "on",
+          wordWrap: 'on',
           ...props.options,
         }}
       />

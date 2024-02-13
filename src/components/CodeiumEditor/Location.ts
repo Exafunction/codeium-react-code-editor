@@ -1,4 +1,4 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
 export class Position implements monaco.IPosition {
   readonly line: number;
@@ -48,7 +48,7 @@ export class Range implements monaco.IRange {
   static fromMonaco(range: monaco.IRange): Range {
     return new Range(
       new Position(range.startLineNumber - 1, range.startColumn - 1),
-      new Position(range.endLineNumber - 1, range.endColumn - 1)
+      new Position(range.endLineNumber - 1, range.endColumn - 1),
     );
   }
 

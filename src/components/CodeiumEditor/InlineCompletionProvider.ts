@@ -1,11 +1,12 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
-import { Dispatch, SetStateAction } from "react";
-import { PromiseClient } from "@connectrpc/connect";
-import { Status } from "./Status";
-import { MonacoCompletionProvider } from "./CompletionProvider";
-import { LanguageServerService } from "../../api/proto/exa/language_server_pb/language_server_connect";
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import { Document as DocumentInfo } from '../../api/proto/exa/language_server_pb/language_server_pb';
+import { Dispatch, SetStateAction } from 'react';
+import { PromiseClient } from '@connectrpc/connect';
+import { Status } from './Status';
+import { MonacoCompletionProvider } from './CompletionProvider';
+import { LanguageServerService } from '../../api/proto/exa/language_server_pb/language_server_connect';
 
-declare module "monaco-editor" {
+declare module 'monaco-editor' {
   namespace editor {
     interface ICodeEditor {
       _commandService: { executeCommand(command: string): unknown };
@@ -18,19 +19,20 @@ export class InlineCompletionProvider
 {
   private numCompletionsProvided: number;
   readonly completionProvider: MonacoCompletionProvider;
+
   constructor(
     grpcClient: PromiseClient<typeof LanguageServerService>,
     readonly setCompletionCount: Dispatch<SetStateAction<number>>,
     setCodeiumStatus: Dispatch<SetStateAction<Status>>,
     setCodeiumStatusMessage: Dispatch<SetStateAction<string>>,
-    apiKey?: string | undefined
+    apiKey?: string | undefined,
   ) {
     this.numCompletionsProvided = 0;
     this.completionProvider = new MonacoCompletionProvider(
       grpcClient,
       setCodeiumStatus,
       setCodeiumStatusMessage,
-      apiKey
+      apiKey,
     );
   }
 
@@ -42,12 +44,12 @@ export class InlineCompletionProvider
     model: monaco.editor.ITextModel,
     position: monaco.Position,
     context: monaco.languages.InlineCompletionContext,
-    token: monaco.CancellationToken
+    token: monaco.CancellationToken,
   ) {
     const completions = await this.completionProvider.provideInlineCompletions(
       model,
       position,
-      token
+      token,
     );
     // Only count completions provided if non-empty (i.e. exclude cancelled
     // requests).
@@ -62,5 +64,9 @@ export class InlineCompletionProvider
 
   public acceptedLastCompletion(completionId: string) {
     this.completionProvider.acceptedLastCompletion(completionId);
+  }
+
+  public updateOtherDocuments(otherDocuments: DocumentInfo[]) {
+    this.completionProvider.otherDocuments = otherDocuments;
   }
 }
