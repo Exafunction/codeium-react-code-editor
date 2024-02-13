@@ -184,6 +184,11 @@ export const MultiFileContext: Story = {
   args: {
     ...baseParams,
     language: 'javascript',
+    options: {
+      scrollbar: {
+        vertical: 'hidden',
+      },
+    },
     value: `// You have context over a sample HTML page.
 // Codeium's generation will take this context into account when suggesting.
 
