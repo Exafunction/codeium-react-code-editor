@@ -1,7 +1,7 @@
 import {
   Completion,
   CompletionSource,
-} from "../../api/proto/exa/codeium_common_pb/codeium_common_pb";
+} from '../../api/proto/exa/codeium_common_pb/codeium_common_pb';
 
 export type CompletionAndRange = {
   completion: Completion;

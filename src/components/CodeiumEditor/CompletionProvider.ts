@@ -1,26 +1,26 @@
-import { Code, ConnectError, PromiseClient } from "@connectrpc/connect";
-import { CancellationToken } from "./CancellationToken";
+import { Code, ConnectError, PromiseClient } from '@connectrpc/connect';
+import { CancellationToken } from './CancellationToken';
 import {
   Document as DocumentInfo,
   GetCompletionsResponse,
   CompletionItem,
-} from "../../api/proto/exa/language_server_pb/language_server_pb";
-import { Document } from "./Document";
-import { Position, Range } from "./Location";
+} from '../../api/proto/exa/language_server_pb/language_server_pb';
+import { Document } from './Document';
+import { Position, Range } from './Location';
 import {
   numUtf8BytesToNumCodeUnits,
   numCodeUnitsToNumUtf8Bytes,
-} from "../../utils/utf";
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
-import { LanguageServerService } from "../../api/proto/exa/language_server_pb/language_server_connect";
+} from '../../utils/utf';
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import { LanguageServerService } from '../../api/proto/exa/language_server_pb/language_server_connect';
 import {
   Language,
   Metadata,
-} from "../../api/proto/exa/codeium_common_pb/codeium_common_pb";
-import { Status } from "./Status";
-import { uuid } from "../../utils/uuid";
-import { getCurrentURL, getPackageVersion } from "../../utils/identity";
-import { languageIdToEnum } from "../../utils/language";
+} from '../../api/proto/exa/codeium_common_pb/codeium_common_pb';
+import { Status } from './Status';
+import { uuid } from '../../utils/uuid';
+import { getCurrentURL, getPackageVersion } from '../../utils/identity';
+import { languageIdToEnum } from '../../utils/language';
 
 class MonacoInlineCompletion implements monaco.languages.InlineCompletion {
   readonly insertText: string;
@@ -38,13 +38,13 @@ class MonacoInlineCompletion implements monaco.languages.InlineCompletion {
     this.text = insertText;
     this.range = range;
     this.command = {
-      id: "codeium.acceptCompletion",
-      title: "Accept Completion",
+      id: 'codeium.acceptCompletion',
+      title: 'Accept Completion',
       arguments: [completionId, insertText],
     };
   }
 }
-const EDITOR_API_KEY = "d49954eb-cfba-4992-980f-d8fb37f0e942";
+const EDITOR_API_KEY = 'd49954eb-cfba-4992-980f-d8fb37f0e942';
 /**
  * CompletionProvider class for Codeium.
  */
@@ -61,7 +61,7 @@ export class MonacoCompletionProvider {
     grpcClient: PromiseClient<typeof LanguageServerService>,
     readonly setStatus: (status: Status) => void,
     readonly setMessage: (message: string) => void,
-    readonly apiKey?: string | undefined
+    readonly apiKey?: string | undefined,
   ) {
     this.sessionId = `react-editor-${uuid()}`;
     this.client = grpcClient;
@@ -77,10 +77,10 @@ export class MonacoCompletionProvider {
 
   private getMetadata(): Metadata {
     const metadata = new Metadata({
-      ideName: "web",
-      ideVersion: getCurrentURL() ?? "unknown",
-      extensionName: "@codeium/react-code-editor",
-      extensionVersion: getPackageVersion() ?? "unknown",
+      ideName: 'web',
+      ideVersion: getCurrentURL() ?? 'unknown',
+      extensionName: '@codeium/react-code-editor',
+      extensionVersion: getPackageVersion() ?? 'unknown',
       apiKey: this.apiKey ?? EDITOR_API_KEY,
       sessionId: this.sessionId,
     });
@@ -97,7 +97,7 @@ export class MonacoCompletionProvider {
   public async provideInlineCompletions(
     model: monaco.editor.ITextModel,
     monacoPosition: monaco.Position,
-    token: CancellationToken
+    token: CancellationToken,
   ): Promise<
     | monaco.languages.InlineCompletions<monaco.languages.InlineCompletion>
     | undefined
@@ -116,7 +116,7 @@ export class MonacoCompletionProvider {
     const signal = abortController.signal;
 
     this.setStatus(Status.PROCESSING);
-    this.setMessage("Generating completions...");
+    this.setMessage('Generating completions...');
 
     const documentInfo = this.getDocumentInfo(document, position);
     const editorOptions = {
@@ -127,13 +127,13 @@ export class MonacoCompletionProvider {
     let includedOtherDocs = this.otherDocuments;
     if (includedOtherDocs.length > 10) {
       console.warn(
-        `Too many other documents: ${includedOtherDocs.length} (max 10)`
+        `Too many other documents: ${includedOtherDocs.length} (max 10)`,
       );
       includedOtherDocs = includedOtherDocs.slice(0, 10);
     }
     console.log(
       `Included other documents: ${includedOtherDocs.length}`,
-      includedOtherDocs.map((d) => d.toJson())
+      includedOtherDocs.map((d) => d.toJson()),
     );
 
     // Get completions.
@@ -149,7 +149,7 @@ export class MonacoCompletionProvider {
         {
           signal,
           headers: this.getAuthHeader(),
-        }
+        },
       );
     } catch (err) {
       // Handle cancellation.
@@ -157,13 +157,13 @@ export class MonacoCompletionProvider {
         // cancelled
       } else {
         this.setStatus(Status.ERROR);
-        this.setMessage("Something went wrong; please try again.");
+        this.setMessage('Something went wrong; please try again.');
       }
       return undefined;
     }
     if (!getCompletionsResponse.completionItems) {
       // TODO(nick): Distinguish warning / error states here.
-      const message = " No completions were generated";
+      const message = ' No completions were generated';
       this.setStatus(Status.SUCCESS);
       this.setMessage(message);
       return undefined;
@@ -173,7 +173,7 @@ export class MonacoCompletionProvider {
     // Create inline completion items from completions.
     const inlineCompletionItems = completionItems
       .map((completionItem) =>
-        this.createInlineCompletionItem(completionItem, document)
+        this.createInlineCompletionItem(completionItem, document),
       )
       .filter((item) => !!item);
 
@@ -204,11 +204,11 @@ export class MonacoCompletionProvider {
           },
           {
             headers: this.getAuthHeader(),
-          }
+          },
         )
         .then(resolve)
         .catch((err) => {
-          console.log("Error: ", err);
+          console.log('Error: ', err);
         });
     });
   }
@@ -222,7 +222,7 @@ export class MonacoCompletionProvider {
    */
   private getDocumentInfo(
     document: Document,
-    position: Position
+    position: Position,
   ): DocumentInfo {
     // The offset is measured in bytes.
     const text = document.getText();
@@ -239,7 +239,7 @@ export class MonacoCompletionProvider {
       editorLanguage: document.languageId,
       language,
       cursorOffset: BigInt(offset),
-      lineEnding: "\n",
+      lineEnding: '\n',
     });
 
     return documentInfo;
@@ -254,7 +254,7 @@ export class MonacoCompletionProvider {
    */
   private createInlineCompletionItem(
     completionItem: CompletionItem,
-    document: Document
+    document: Document,
   ): MonacoInlineCompletion | undefined {
     if (!completionItem.completion || !completionItem.range) {
       return undefined;
@@ -263,17 +263,20 @@ export class MonacoCompletionProvider {
     // Create and return inlineCompletionItem.
     const text = document.getText();
     const startPosition = document.positionAt(
-      numUtf8BytesToNumCodeUnits(text, Number(completionItem.range.startOffset))
+      numUtf8BytesToNumCodeUnits(
+        text,
+        Number(completionItem.range.startOffset),
+      ),
     );
     const endPosition = document.positionAt(
-      numUtf8BytesToNumCodeUnits(text, Number(completionItem.range.endOffset))
+      numUtf8BytesToNumCodeUnits(text, Number(completionItem.range.endOffset)),
     );
     const range = new Range(startPosition, endPosition);
 
     const inlineCompletionItem = new MonacoInlineCompletion(
       completionItem.completion.text,
       range,
-      completionItem.completion.completionId
+      completionItem.completion.completionId,
     );
     return inlineCompletionItem;
   }

@@ -1,7 +1,7 @@
-import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
+import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
 
-import { Position, Range } from "./Location";
-import { Line } from "./Line";
+import { Position, Range } from './Location';
+import { Line } from './Line';
 
 export class Document {
   private model: monaco.editor.ITextModel;
@@ -20,7 +20,7 @@ export class Document {
   }
 
   public lineAt(positionOrLine: Position | number): Line {
-    if (typeof positionOrLine !== "number") {
+    if (typeof positionOrLine !== 'number') {
       positionOrLine = positionOrLine.line;
     }
     return new Line(
@@ -29,9 +29,9 @@ export class Document {
         new Position(positionOrLine, 0),
         new Position(
           positionOrLine,
-          this.model.getLineLength(positionOrLine + 1)
-        )
-      )
+          this.model.getLineLength(positionOrLine + 1),
+        ),
+      ),
     );
   }
 

@@ -1,19 +1,19 @@
-import type { Meta, StoryObj } from "@storybook/react";
-import React from "react";
+import type { Meta, StoryObj } from '@storybook/react';
+import React from 'react';
 
-import { CodeiumEditor } from "../components";
-import { Document, Language } from "../models";
+import { CodeiumEditor } from '../components';
+import { Document, Language } from '../models';
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta: Meta<typeof CodeiumEditor> = {
-  title: "Example/Editor",
+  title: 'Example/Editor',
   component: CodeiumEditor,
   parameters: {
     // Optional parameter to center the component in the Canvas. More info: https://storybook.js.org/docs/configure/story-layout
-    layout: "centered",
+    layout: 'centered',
   },
   // This component will have an automatically generated Autodocs entry: https://storybook.js.org/docs/writing-docs/autodocs
-  tags: ["autodocs"],
+  tags: ['autodocs'],
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {},
 } satisfies Meta<typeof CodeiumEditor>;
@@ -22,8 +22,8 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const baseParams = {
-  width: "700px",
-  height: "500px",
+  width: '700px',
+  height: '500px',
 };
 
 const PYTHON_SNIPPET = `# Need inspiration? Try adding extra constraints or context to this parse json function!
@@ -38,7 +38,7 @@ def parse_json_lines(filename: str) -> List[Any]:
 export const PythonEditor: Story = {
   args: {
     ...baseParams,
-    language: "python",
+    language: 'python',
     value: PYTHON_SNIPPET,
   },
 };
@@ -54,7 +54,7 @@ function parseStringAsHtml(content, selector) {
 export const JavaScriptEditor: Story = {
   args: {
     ...baseParams,
-    language: "javascript",
+    language: 'javascript',
     value: JAVASCRIPT_SNIPPET,
   },
 };
@@ -76,7 +76,7 @@ func main() {
 export const GoEditor: Story = {
   args: {
     ...baseParams,
-    language: "go",
+    language: 'go',
     value: GO_SNIPPET,
   },
 };
@@ -95,7 +95,7 @@ public ArrayList<Widget> getVisibleWidgets() {
 export const JavaEditor: Story = {
   args: {
     ...baseParams,
-    language: "java",
+    language: 'java',
     value: JAVA_SNIPPET,
   },
 };
@@ -115,7 +115,7 @@ class Matrix() {
 export const CppEditor: Story = {
   args: {
     ...baseParams,
-    language: "cpp",
+    language: 'cpp',
     value: CPP_SNIPPET,
   },
 };
@@ -142,7 +142,7 @@ const HTML_SNIPPET = `<html>
 export const HTMLEditor: Story = {
   args: {
     ...baseParams,
-    language: "html",
+    language: 'html',
     value: HTML_SNIPPET,
   },
 };
@@ -152,7 +152,7 @@ export const MultiFileContext: Story = {
     <div>
       <h1>Multi File Context</h1>
       <p>
-        Neighboring file at <code>index.html</code> passed into the{" "}
+        Neighboring file at <code>index.html</code> passed into the{' '}
         <code>otherDocuments</code> property:
       </p>
       <code>
@@ -166,17 +166,17 @@ export const MultiFileContext: Story = {
   ),
   args: {
     ...baseParams,
-    language: "javascript",
+    language: 'javascript',
     value: `// You have context over a sample HTML page.
 // Codeium's generation will take this context into account when suggesting.
 
 // Get the contact form values by ID.`,
     otherDocuments: [
       new Document({
-        absolutePath: "/index.html",
-        relativePath: "index.html",
+        absolutePath: '/index.html',
+        relativePath: 'index.html',
         text: HTML_SNIPPET,
-        editorLanguage: "html",
+        editorLanguage: 'html',
         language: Language.HTML,
       }),
     ],
