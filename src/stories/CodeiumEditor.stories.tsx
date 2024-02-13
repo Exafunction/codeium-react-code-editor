@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react";
+import React from "react";
 
 import { CodeiumEditor } from "../components";
+import { Document, Language } from "../models";
 
 // More on how to set up stories at: https://storybook.js.org/docs/writing-stories#default-export
 const meta: Meta<typeof CodeiumEditor> = {
@@ -20,9 +22,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const baseParams = {
-    width: "700px",
-    height: "500px",
-}
+  width: "700px",
+  height: "500px",
+};
 
 const PYTHON_SNIPPET = `# Need inspiration? Try adding extra constraints or context to this parse json function!
 # Or scratch everything and use your imagination.
@@ -30,14 +32,14 @@ const PYTHON_SNIPPET = `# Need inspiration? Try adding extra constraints or cont
 def parse_json_lines(filename: str) -> List[Any]:
     output = []
     with open(filename, "r", encoding="utf-8") as f:
-`
+`;
 
 // More on writing stories with args: https://storybook.js.org/docs/writing-stories/args
 export const PythonEditor: Story = {
   args: {
     ...baseParams,
     language: "python",
-    value: PYTHON_SNIPPET
+    value: PYTHON_SNIPPET,
   },
 };
 
@@ -47,13 +49,13 @@ const JAVASCRIPT_SNIPPET = `
 
 // Convert HTML string to DOM object
 function parseStringAsHtml(content, selector) {
-`
+`;
 
 export const JavaScriptEditor: Story = {
   args: {
     ...baseParams,
     language: "javascript",
-    value: JAVASCRIPT_SNIPPET 
+    value: JAVASCRIPT_SNIPPET,
   },
 };
 
@@ -70,12 +72,12 @@ import (
 
 func main() {
     // Configure log and create a new logger
-`
+`;
 export const GoEditor: Story = {
   args: {
     ...baseParams,
     language: "go",
-    value:  GO_SNIPPET
+    value: GO_SNIPPET,
   },
 };
 
@@ -88,16 +90,15 @@ const JAVA_SNIPPET = `
  * @return ArrayList of all visible widgets
  */
 public ArrayList<Widget> getVisibleWidgets() {
-`
+`;
 
 export const JavaEditor: Story = {
   args: {
     ...baseParams,
     language: "java",
-    value:  JAVA_SNIPPET
+    value: JAVA_SNIPPET,
   },
 };
-
 
 const CPP_SNIPPET = `
 // Need inspiration? Try finishing this Matrix class with constructors,
@@ -109,13 +110,73 @@ template <class T>
 class Matrix() {
  public:
   Matrix(int rows, int cols) {
-`
+`;
 
 export const CppEditor: Story = {
   args: {
     ...baseParams,
     language: "cpp",
-    value:  CPP_SNIPPET
+    value: CPP_SNIPPET,
   },
 };
 
+const HTML_SNIPPET = `<html>
+  <head>
+    <title>Contact Form</title>
+  </head>
+  <body>
+    <h1>Contact Form</h1>
+    <p>I'm a simple contact form.</p>
+
+    <form>
+      <label for="name">Name:</label>
+      <input type="text" id="name-field-id" name="name" />
+
+      <label for="email">Email:</label>
+      <input type="email" id="email-field-id" name="email" />
+    </form>
+  </body>
+</html>
+`;
+
+export const HTMLEditor: Story = {
+  args: {
+    ...baseParams,
+    language: "html",
+    value: HTML_SNIPPET,
+  },
+};
+
+export const MultiFileContext: Story = {
+  decorators: (Story) => (
+    <div>
+      <h1>Multi File Context</h1>
+      <p>
+        Neighboring file at <code>index.html</code> passed into the{" "}
+        <code>otherDocuments</code> property:
+      </p>
+      <code>
+        <pre>{HTML_SNIPPET}</pre>
+      </code>
+      <div>
+        <h3>Context Aware Editor</h3>
+        <Story />
+      </div>
+    </div>
+  ),
+  args: {
+    ...baseParams,
+    language: "javascript",
+    value: `// You have context over a sample HTML page.
+// Codeium's generation will take this context into account when suggesting.`,
+    otherDocuments: [
+      new Document({
+        absolutePath: "/index.html",
+        relativePath: "/index.html",
+        text: HTML_SNIPPET,
+        editorLanguage: "html",
+        language: Language.HTML,
+      }),
+    ],
+  },
+};
