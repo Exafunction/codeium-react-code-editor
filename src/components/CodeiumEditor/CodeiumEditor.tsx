@@ -188,7 +188,6 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
           scrollBeyondLastColumn: 0,
           scrollbar: {
             alwaysConsumeMouseWheel: false,
-            vertical: 'hidden',
           },
           codeLens: false,
           // for resizing, but apparently might have "severe performance impact"
