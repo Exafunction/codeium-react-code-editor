@@ -52,7 +52,6 @@ const EDITOR_API_KEY = "d49954eb-cfba-4992-980f-d8fb37f0e942";
  * CompletionProvider class for Codeium.
  */
 export class MonacoCompletionProvider {
-  authHeader: Record<string, string> = {};
   private client: PromiseClient<typeof LanguageServerService>;
   private sessionId: string;
 
@@ -64,22 +63,26 @@ export class MonacoCompletionProvider {
   ) {
     this.sessionId = `react-editor-${uuid()}`;
     this.client = grpcClient;
+  }
 
-    const Authorization = `Basic ${this.getMetadata().apiKey}-${
-      this.sessionId
-    }`;
-    this.authHeader = { Authorization };
+  private getAuthHeader() {
+    const metadata = this.getMetadata();
+    const headers = {
+      Authorization: `Basic ${metadata.apiKey}-${metadata.sessionId}`,
+    };
+    return headers;
   }
 
   private getMetadata(): Metadata {
-    return new Metadata({
+    const metadata = new Metadata({
       ideName: "web",
       ideVersion: getCurrentURL() ?? "unknown",
       extensionName: "@codeium/react-code-editor",
       extensionVersion: getPackageVersion() ?? "unknown",
       apiKey: this.apiKey ?? EDITOR_API_KEY,
-      sessionId: `demo-${uuid()}`,
+      sessionId: this.sessionId,
     });
+    return metadata;
   }
 
   /**
@@ -130,7 +133,7 @@ export class MonacoCompletionProvider {
         },
         {
           signal,
-          headers: this.authHeader,
+          headers: this.getAuthHeader(),
         }
       );
     } catch (err) {
@@ -185,7 +188,7 @@ export class MonacoCompletionProvider {
             completionId: completionId,
           },
           {
-            headers: this.authHeader,
+            headers: this.getAuthHeader(),
           }
         )
         .then(resolve)
