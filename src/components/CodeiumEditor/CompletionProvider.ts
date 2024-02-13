@@ -19,11 +19,8 @@ import {
 } from "../../api/proto/exa/codeium_common_pb/codeium_common_pb";
 import { Status } from "./Status";
 import { uuid } from "../../utils/uuid";
-import {
-  getBrowserVersion,
-  getCurrentURL,
-  getPackageVersion,
-} from "../../utils/identity";
+import { getCurrentURL, getPackageVersion } from "../../utils/identity";
+import { languageIdToEnum } from "../../utils/language";
 
 class MonacoInlineCompletion implements monaco.languages.InlineCompletion {
   readonly insertText: string;
@@ -214,10 +211,15 @@ export class MonacoCompletionProvider {
     const numCodeUnits = document.offsetAt(position);
     const offset = numCodeUnitsToNumUtf8Bytes(text, numCodeUnits);
 
+    const language = languageIdToEnum(document.languageId);
+    if (language === Language.UNSPECIFIED) {
+      console.warn(`Unknown language: ${document.languageId}`);
+    }
+
     const documentInfo = new DocumentInfo({
       text: text,
       editorLanguage: document.languageId,
-      language: Language.PYTHON,
+      language,
       cursorOffset: BigInt(offset),
       lineEnding: "\n",
     });
