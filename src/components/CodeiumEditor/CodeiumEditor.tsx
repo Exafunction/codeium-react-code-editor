@@ -34,6 +34,16 @@ export interface CodeiumEditorProps extends EditorProps {
    * documents.
    */
   otherDocuments?: Document[];
+
+  /**
+   * Optional classname for the container.
+   */
+  containerClassName?: string;
+
+  /**
+   * Optional styles for the container.
+   */
+  containerStyle?: React.CSSProperties;
 }
 
 /**
@@ -43,6 +53,8 @@ export interface CodeiumEditorProps extends EditorProps {
 export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
   languageServerAddress = 'https://web-backend.codeium.com',
   otherDocuments = [],
+  containerClassName = '',
+  containerStyle = {},
   ...props
 }) => {
   const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
@@ -166,7 +178,9 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
       style={{
         ...layout,
         position: 'relative',
+        ...containerStyle,
       }}
+      className={containerClassName}
     >
       <a
         href={'https://codeium.com?referrer=codeium-editor'}

@@ -137,6 +137,74 @@ export const MarkdownEditor: Story = {
   },
 };
 
+export const PlainTextEditor: Story = {
+  decorators: (Story) => (
+    <div>
+      <h1>Plain Text</h1>
+      <textarea
+        style={{
+          width: '700px',
+          height: '100px',
+          border: '1px solid black',
+          borderRadius: '2px',
+          padding: '6px',
+          fontFamily: 'sans-serif',
+        }}
+        placeholder="Type something"
+      />
+      <Story />
+    </div>
+  ),
+  args: {
+    ...baseParams,
+    language: 'markdown',
+    value: 'This is a test textarea. Lorem',
+    containerStyle: {
+      border: '1px solid black',
+      borderRadius: '2px',
+      padding: '6px',
+    },
+    options: {
+      scrollbar: {
+        vertical: 'hidden',
+        horizontal: 'hidden',
+      },
+      renderControlCharacters: false,
+      glyphMargin: false,
+      rulers: [],
+      overviewRulerLanes: 0,
+      overviewRulerBorder: false,
+      wordWrap: 'on',
+      renderLineHighlight: 'none',
+      lineNumbers: 'off',
+      renderWhitespace: 'none',
+      hideCursorInOverviewRuler: true,
+      scrollBeyondLastLine: false,
+      smoothScrolling: true,
+      folding: false,
+      fontFamily: 'Helvetica',
+      fontSize: 13,
+      language: 'plaintext',
+      lineDecorationsWidth: 0,
+      minimap: {
+        enabled: false,
+      },
+      occurrencesHighlight: 'off',
+      cursorStyle: 'line-thin',
+      hover: {
+        enabled: false,
+      },
+      selectionHighlight: false,
+      find: {
+        seedSearchStringFromSelection: 'never',
+      },
+      multiCursorLimit: 1,
+      links: false,
+      matchBrackets: 'never',
+    },
+  },
+};
+
 const HTML_SNIPPET = `<html>
   <head>
     <title>Contact Form</title>
