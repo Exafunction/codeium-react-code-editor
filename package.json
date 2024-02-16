@@ -1,6 +1,6 @@
 {
   "name": "@codeium/react-code-editor",
-  "version": "1.0.10",
+  "version": "1.0.12",
   "description": "AI-powered React component",
   "main": "dist/index.js",
   "type": "module",
@@ -21,7 +21,7 @@
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build",
     "format": "prettier --write 'src/**/*.{ts,tsx}'",
-    "prepare": "npm run rollup"
+    "prepare": "pnpm run generate && pnpm run rollup"
   },
   "repository": {
     "type": "git",
