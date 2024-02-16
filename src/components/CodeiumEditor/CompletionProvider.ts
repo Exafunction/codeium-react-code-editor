@@ -62,6 +62,7 @@ export class MonacoCompletionProvider {
     readonly setStatus: (status: Status) => void,
     readonly setMessage: (message: string) => void,
     readonly apiKey?: string | undefined,
+    readonly multilineModelThreshold?: number | undefined,
   ) {
     this.sessionId = `react-editor-${uuid()}`;
     this.client = grpcClient;
@@ -141,6 +142,11 @@ export class MonacoCompletionProvider {
           document: documentInfo,
           editorOptions: editorOptions,
           otherDocuments: includedOtherDocs,
+          multilineConfig: this.multilineModelThreshold
+            ? {
+                threshold: this.multilineModelThreshold,
+              }
+            : undefined,
         },
         {
           signal,

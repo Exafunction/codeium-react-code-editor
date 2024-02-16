@@ -26,6 +26,7 @@ export class InlineCompletionProvider
     setCodeiumStatus: Dispatch<SetStateAction<Status>>,
     setCodeiumStatusMessage: Dispatch<SetStateAction<string>>,
     apiKey?: string | undefined,
+    multilineModelThreshold?: number | undefined,
   ) {
     this.numCompletionsProvided = 0;
     this.completionProvider = new MonacoCompletionProvider(
@@ -33,6 +34,7 @@ export class InlineCompletionProvider
       setCodeiumStatus,
       setCodeiumStatusMessage,
       apiKey,
+      multilineModelThreshold,
     );
   }
 
