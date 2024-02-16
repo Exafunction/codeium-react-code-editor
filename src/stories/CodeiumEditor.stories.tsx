@@ -159,6 +159,7 @@ export const PlainTextEditor: Story = {
     ...baseParams,
     language: 'markdown',
     value: 'This is a test textarea. Lorem',
+    multilineModelThreshold: 1.0,
     containerStyle: {
       border: '1px solid black',
       borderRadius: '2px',

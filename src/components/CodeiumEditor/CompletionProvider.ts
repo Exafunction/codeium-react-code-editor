@@ -4,6 +4,7 @@ import {
   Document as DocumentInfo,
   GetCompletionsResponse,
   CompletionItem,
+  MultilineConfig,
 } from '../../api/proto/exa/language_server_pb/language_server_pb';
 import { Document } from './Document';
 import { Position, Range } from './Location';
@@ -133,6 +134,13 @@ export class MonacoCompletionProvider {
       includedOtherDocs = includedOtherDocs.slice(0, 10);
     }
 
+    let multilineConfig: MultilineConfig | undefined = undefined;
+    if (this.multilineModelThreshold !== undefined) {
+      multilineConfig = new MultilineConfig({
+        threshold: this.multilineModelThreshold,
+      });
+    }
+
     // Get completions.
     let getCompletionsResponse: GetCompletionsResponse;
     try {
@@ -142,11 +150,7 @@ export class MonacoCompletionProvider {
           document: documentInfo,
           editorOptions: editorOptions,
           otherDocuments: includedOtherDocs,
-          multilineConfig: this.multilineModelThreshold
-            ? {
-                threshold: this.multilineModelThreshold,
-              }
-            : undefined,
+          multilineConfig,
         },
         {
           signal,
