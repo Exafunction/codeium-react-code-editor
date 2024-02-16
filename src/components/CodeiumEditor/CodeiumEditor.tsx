@@ -44,6 +44,13 @@ export interface CodeiumEditorProps extends EditorProps {
    * Optional styles for the container.
    */
   containerStyle?: React.CSSProperties;
+
+  /**
+   * Optional multiline model threshold. Should not be needed for most use cases.
+   * Numerical value between 0-1, higher = more single line, lower = more multiline,
+   * 0.0 = only_multiline.
+   */
+  multilineModelThreshold?: number;
 }
 
 /**
@@ -86,6 +93,7 @@ export const CodeiumEditor: React.FC<CodeiumEditorProps> = ({
       setCodeiumStatus,
       setCodeiumStatusMessage,
       props.apiKey,
+      props.multilineModelThreshold,
     );
   }, []);
 
